@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<SplitPane dividerPositions="0.5" orientation="VERTICAL" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+  <items>
+    <AnchorPane>
+         <children>
+            <Pane fx:id="topPane" prefHeight="192.0" prefWidth="256.0" style="-fx-background-color: #000000;">
+               <children>
+                  <ImageView fitHeight="157.0" fitWidth="256.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/images/backgrounds/greenBackground.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="53.0" fitWidth="271.0" layoutX="-1.0" layoutY="143.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/images/textBoxes/textBoxOne.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="textBoxLabel" alignment="TOP_LEFT" layoutX="8.0" layoutY="148.0" prefHeight="40.0" prefWidth="243.0" text="Critical Hit!" wrapText="true">
+                     <opaqueInsets>
+                        <Insets bottom="5.0" top="5.0" />
+                     </opaqueInsets>
+                  </Label>
+               </children></Pane>
+         </children></AnchorPane>
+    <AnchorPane>
+         <children>
+            <Pane prefHeight="192.0" prefWidth="256.0">
+               <children>
+                  <ImageView fx:id="fightButton" fitHeight="150.0" fitWidth="200.0" layoutX="28.0" layoutY="48.0" onMouseClicked="#fight" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/images/buttons/battleButton.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="81.0" layoutX="88.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/images/buttons/runButton.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="fireButton" fitHeight="58.0" fitWidth="95.0" layoutX="28.0" layoutY="43.0" onMouseClicked="#fireClick" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@../resources/images/buttons/fireButton.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="grassButton" fitHeight="58.0" fitWidth="95.0" layoutX="139.0" layoutY="43.0" onMouseClicked="#grassClick" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@../resources/images/buttons/grassButton.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="waterButton" fitHeight="58.0" fitWidth="95.0" layoutX="81.0" layoutY="96.0" onMouseClicked="#waterClick" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@../resources/images/buttons/waterButton.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+         </children></AnchorPane>
+  </items>
+</SplitPane>
