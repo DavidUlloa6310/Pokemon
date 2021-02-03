@@ -11,12 +11,15 @@ import sample.Selectors.PokemonSelector;
 
 import java.util.TimerTask;
 
-public class Controller {
+public class BattleController {
 
     private final Group layout = new Group();
 
     private final Point playerTrainerPos = new Point(0, 63);
     private final Point playerTrainerPokemon =  new Point(55, 63);
+
+    private Pokemon friendlyPokemon;
+    private Pokemon enemyPokemon;
 
     private final Point enemyTrainerPos = new Point(210, 30);
     private final Point enemyTrainerPokemon = new Point(140, 20);
@@ -43,11 +46,11 @@ public class Controller {
     public void initialize() {
 
         ImageView trainer = new ImageView(new Image("resources/images/trainers/maleTrainer.png"));
-        Pokemon friendlyPokemon = new Pokemon(PokemonSelector.BULBOSAUR);
+        friendlyPokemon = new Pokemon(PokemonSelector.BULBOSAUR);
         friendlyPokemon.showBack();
 
         ImageView enemyTrainer = new ImageView(new Image("resources/images/trainers/maleTrainerFront.png"));
-        Pokemon enemyPokemon = new Pokemon(PokemonSelector.BULBOSAUR);
+        enemyPokemon = new Pokemon(PokemonSelector.BULBOSAUR);
         enemyPokemon.showFront();
 
         trainer.relocate(0, 63);
@@ -65,6 +68,7 @@ public class Controller {
             fireButton.setVisible(true);
             waterButton.setVisible(true);
             grassButton.setVisible(true);
+            friendlyPokemon.startBackTimer();
         }
     }
 

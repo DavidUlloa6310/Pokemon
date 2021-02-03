@@ -31,21 +31,21 @@ public class Pokemon extends ImageView {
     }
 
     private void generateBackTimer() {
-        backTimer.setCycleCount(5000);
+        backTimer.setCycleCount(1);
         backTimer.setAutoReverse(false);
         final Collection<KeyFrame> frames = backTimer.getKeyFrames();
         Duration frameGap = Duration.millis(256);
         Duration frameTime = Duration.ZERO;
 
         frameTime = frameTime.add(frameGap);
-        frames.add(new KeyFrame(frameTime, e-> setImage(backImageOne)));
+        frames.add(new KeyFrame(frameTime, e-> setImage(backImageTwo)));
 
         frameTime = frameTime.add(frameGap);
-        frames.add(new KeyFrame(frameTime, e-> setImage(backImageTwo)));
+        frames.add(new KeyFrame(frameTime, e-> setImage(backImageOne)));
     }
 
     private void generateFrontTimer() {
-        frontTimer.setCycleCount(5000);
+        frontTimer.setCycleCount(1);
         frontTimer.setAutoReverse(false);
         final Collection<KeyFrame> frames = frontTimer.getKeyFrames();
         Duration frameGap = Duration.millis(256);
@@ -56,6 +56,9 @@ public class Pokemon extends ImageView {
 
         frameTime = frameTime.add(frameGap);
         frames.add(new KeyFrame(frameTime, e-> setImage(frontImageTwo)));
+
+        frameTime = frameTime.add(frameGap);
+        frames.add(new KeyFrame(frameTime, e-> setImage(frontImageOne)));
     }
 
     public void showFront() {
