@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
+import sample.Selectors.PokemonSelector;
 
 import java.util.TimerTask;
 
@@ -42,18 +43,19 @@ public class Controller {
     public void initialize() {
 
         ImageView trainer = new ImageView(new Image("resources/images/trainers/maleTrainer.png"));
-        ImageView pokemon = new ImageView(new Image("resources/images/pokemon/back/bulbosaur_1.png"));
-
+        Pokemon friendlyPokemon = new Pokemon(PokemonSelector.BULBOSAUR);
+        friendlyPokemon.showBack();
 
         ImageView enemyTrainer = new ImageView(new Image("resources/images/trainers/maleTrainerFront.png"));
-        ImageView enemyPokemon = new ImageView(new Image("resources/images/pokemon/front/venosaur_1.png"));
+        Pokemon enemyPokemon = new Pokemon(PokemonSelector.BULBOSAUR);
+        enemyPokemon.showFront();
 
         trainer.relocate(0, 63);
-        pokemon.relocate(55, 63);
-        enemyPokemon.relocate(140, 20);
+        friendlyPokemon.relocate(55, 63);
+        enemyPokemon.relocate(140, 30);
         enemyTrainer.relocate(210, 30);
 
-        layout.getChildren().addAll(enemyTrainer, trainer, pokemon, enemyPokemon);
+        layout.getChildren().addAll(enemyTrainer, trainer, friendlyPokemon, enemyPokemon);
         topPane.getChildren().add(layout);
     }
 
