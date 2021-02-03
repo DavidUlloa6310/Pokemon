@@ -10,10 +10,14 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("menu.fxml"));
-        primaryStage.setTitle("Pokemon!");
-        primaryStage.setResizable(false);
-        primaryStage.setScene(new Scene(root, 245, 384));
+        Parent menuRoot = FXMLLoader.load(getClass().getResource("FXMLfiles/menu.fxml"));
+        Parent battleRoot = FXMLLoader.load(getClass().getResource("FXMLfiles/battle.fxml"));
+
+        SceneLibrary.setPrimaryStage(primaryStage);
+        SceneLibrary.setMenuRoot(menuRoot);
+        SceneLibrary.setBattleRoot(battleRoot);
+
+        SceneLibrary.startBattle();
         primaryStage.show();
     }
 

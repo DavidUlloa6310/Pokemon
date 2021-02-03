@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<SplitPane dividerPositions="0.5" orientation="VERTICAL" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MenuController">
+  <items>
+      <AnchorPane>
+         <children>
+            <Pane prefHeight="192.0" prefWidth="256.0" style="-fx-background-color: #000000;">
+               <children>
+                  <ImageView fitHeight="192.0" fitWidth="256.0" layoutX="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/images/titleScreens/pokemonSilver.gif" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+      <AnchorPane>
+         <children>
+            <Pane prefHeight="192.0" prefWidth="256.0" style="-fx-background-color: #000000;">
+               <children>
+                  <ImageView fitHeight="39.0" fitWidth="212.0" layoutX="40.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/images/buttons/menuButton.png" />
+                     </image></ImageView>
+                  <ImageView fitHeight="39.0" fitWidth="188.0" layoutX="40.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/images/buttons/menuButton.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="39.0" fitWidth="201.0" layoutX="40.0" layoutY="104.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/images/buttons/menuButton.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="22.0" fitWidth="143.0" layoutX="61.0" layoutY="150.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../../resources/images/buttons/menuButton.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="41.0" layoutY="26.0" text="Tutorial">
+                     <font>
+                        <Font name="Cambria" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="42.0" layoutY="69.0" text="Campaign">
+                     <font>
+                        <Font name="Cambria" size="12.0" />
+                     </font></Label>
+                  <Label layoutX="42.0" layoutY="116.0" text="Endless">
+                     <font>
+                        <Font name="Cambria" size="12.0" />
+                     </font></Label>
+                  <Label layoutX="69.0" layoutY="153.0" text="Settings And Preferences">
+                     <font>
+                        <Font name="Cambria" size="12.0" />
+                     </font>
+                  </Label>
+               </children></Pane>
+         </children>
+      </AnchorPane>
+  </items>
+</SplitPane>

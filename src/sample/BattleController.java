@@ -6,6 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import sample.Selectors.PokemonSelector;
 
@@ -43,6 +46,12 @@ public class BattleController {
     private Label textBoxLabel;
 
     @FXML
+    private ImageView playerHealthBar;
+
+    @FXML
+    private ImageView enemyHealthBar;
+
+    @FXML
     public void initialize() {
 
         ImageView trainer = new ImageView(new Image("resources/images/trainers/maleTrainer.png"));
@@ -60,6 +69,9 @@ public class BattleController {
 
         layout.getChildren().addAll(enemyTrainer, trainer, friendlyPokemon, enemyPokemon);
         topPane.getChildren().add(layout);
+
+        changePlayerHealth(1);
+        changeEnemyHealth(.2);
     }
 
     public void fight() {
@@ -97,6 +109,50 @@ public class BattleController {
             grassButton.setVisible(false);
             fightButton.setVisible(true);
         }
+    }
+
+    public void changePlayerHealth(double amountPercent) {
+
+        if (amountPercent > 1 || amountPercent < 0)
+            return;
+
+        int amount = (int) (amountPercent * 45);
+
+        Color color;
+
+        if (amountPercent >= .66) {
+            color = Color.DARKGREEN;
+        } else if (amountPercent >= .33) {
+            color = Color.GOLD;
+        } else {
+            color = Color.RED;
+        }
+
+        Rectangle health = new Rectangle(195, 124, amount, 2);
+        health.setFill(color);
+        topPane.getChildren().add(health);
+    }
+
+    public void changeEnemyHealth(double amountPercent) {
+
+        if (amountPercent > 1 || amountPercent < 0)
+            return;
+
+        int amount = (int) (amountPercent * 46);
+
+        Color color;
+
+        if (amountPercent >= .66) {
+            color = Color.DARKGREEN;
+        } else if (amountPercent >= .33) {
+            color = Color.GOLD;
+        } else {
+            color = Color.RED;
+        }
+
+        Rectangle health = new Rectangle(26, 47, amount, 2);
+        health.setFill(color);
+        topPane.getChildren().add(health);
     }
 
 }
