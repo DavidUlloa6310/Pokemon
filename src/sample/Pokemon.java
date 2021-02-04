@@ -17,14 +17,17 @@ public class Pokemon extends ImageView {
     TYPE type;
     boolean isEnemy;
 
+    POKEMON pokemon;
+
     //ANIMATIONS
     private ArrayList<Image> images = new ArrayList<Image>();
+
     final Timeline attackAnimation = new Timeline();
+    final Timeline hurtAnimation = new Timeline();
     final FadeTransition fadeTransition = new FadeTransition();
+    final FadeTransition deathTransition = new FadeTransition();
 
     public Pokemon(POKEMON pokemonSprites, boolean isEnemy) {
-
-        type = pokemonSprites.getType();
         this.isEnemy = isEnemy;
 
         setPokemon(pokemonSprites);
@@ -33,6 +36,7 @@ public class Pokemon extends ImageView {
 
         generateAttackAnimation();
         generateSpawnAnimation();
+        generateHurtAnimation();
     }
 
     private void generateAttackAnimation() {
@@ -60,6 +64,26 @@ public class Pokemon extends ImageView {
         fadeTransition.setAutoReverse(false);
     }
 
+    private void generateHurtAnimation() {
+        hurtAnimation.setCycleCount(2);
+        hurtAnimation.setAutoReverse(false);
+        final Collection<KeyFrame> frames = hurtAnimation.getKeyFrames();
+        Duration frameGap = Duration.millis(256);
+        Duration frameTime = Duration.ZERO;
+
+        if (isEnemy) {
+            frameTime = frameTime.add(frameGap);
+            frames.add(new KeyFrame(frameTime, e-> setImage(pokemon.getHurtEnemy())));
+        } else {
+            frameTime = frameTime.add(frameGap);
+            frames.add(new KeyFrame(frameTime, e-> setImage(pokemon.getHurtPlayer())));
+        }
+
+        frameTime = frameTime.add(frameGap);
+        frames.add(new KeyFrame(frameTime, e-> setImage(images.get(0))));
+
+    }
+
     public void setPokemon(POKEMON pokemonSprites) {
         if (isEnemy) {
             images = pokemonSprites.getEnemyImages();
@@ -68,6 +92,9 @@ public class Pokemon extends ImageView {
             images = pokemonSprites.getPlayerImages();
             relocate(55, 63);
         }
+
+        type = pokemonSprites.getType();
+        pokemon = pokemonSprites;
 
         generateAttackAnimation();
         generateSpawnAnimation();
@@ -83,11 +110,23 @@ public class Pokemon extends ImageView {
         fadeTransition.play();
     }
 
+    public void startHurtAnimation() {
+        hurtAnimation.play();
+    }
+
     public Timeline getAttackAnimation() {
         return attackAnimation;
     }
 
     public FadeTransition getFadeTransition() {
         return fadeTransition;
+    }
+
+    public Timeline getHurtAnimation() {
+        return hurtAnimation;
+    }
+
+    public TYPE getType() {
+        return type;
     }
 }

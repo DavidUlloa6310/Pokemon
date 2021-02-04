@@ -10,10 +10,13 @@ import sample.Selectors.TRAINER;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Random;
 
 public class Trainer extends ImageView {
 
     private int money = 0;
+    private double health = 1;
+    private Random random = new Random();
 
     private ArrayList<Image> images;
 
@@ -35,6 +38,25 @@ public class Trainer extends ImageView {
             setImage(TRAINER.getFrontImage());
         }
 
+    }
+
+    public POKEMON getRandomPokemon() {
+        int randomNum = random.nextInt(3);
+        POKEMON pokemon;
+        switch (randomNum) {
+            case 0:
+                return firePokemon;
+            case 1:
+                return grassPokemon;
+            default:
+                return waterPokemon;
+        }
+    }
+
+    public void changeHealth(double health) {
+        if (health > 1 || health < 0)
+            return;
+        this.health = health;
     }
 
     public void generateStartTimer() {
@@ -70,5 +92,9 @@ public class Trainer extends ImageView {
 
     public POKEMON getGrassPokemon() {
         return grassPokemon;
+    }
+
+    public double getHealth() {
+        return health;
     }
 }

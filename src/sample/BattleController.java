@@ -9,8 +9,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 import sample.Selectors.POKEMON;
 import sample.Selectors.TRAINER;
+import sample.Selectors.TYPE;
 
 public class BattleController {
 
@@ -27,6 +29,10 @@ public class BattleController {
 
     private final SequentialTransition sequentialTransition = new SequentialTransition();
     private final PauseTransition showPokemon = new PauseTransition();
+    private final PauseTransition checkDamage = new PauseTransition();
+
+    private Rectangle playerHealth;
+    private Rectangle enemyHealth;
 
     private final Point enemyTrainerPos = new Point(210, 30);
     private final Point enemyTrainerPokemon = new Point(140, 20);
@@ -67,8 +73,8 @@ public class BattleController {
         layout.getChildren().addAll(enemyTrainer, trainer, friendlyPokemon, enemyPokemon);
         topPane.getChildren().add(layout);
 
-        changePlayerHealth(1);
-        changeEnemyHealth(.2);
+        changePlayerHealth(trainer.getHealth());
+        changeEnemyHealth(enemyTrainer.getHealth());
 
         showPokemon.setOnFinished(e -> {
             friendlyPokemon.setVisible(true);
@@ -76,6 +82,12 @@ public class BattleController {
         });
 
         sequentialTransition.getChildren().addAll(trainer.getStartTimer(), showPokemon, friendlyPokemon.getFadeTransition(), friendlyPokemon.getAttackAnimation(), enemyPokemon.getFadeTransition(), enemyPokemon.getAttackAnimation());
+
+        checkDamage.setOnFinished(e -> {
+            checkWin(friendlyPokemon.getType(), enemyPokemon.getType());
+        });
+
+        sequentialTransition.getChildren().add(checkDamage);
     }
 
     public void fight() {
@@ -95,7 +107,7 @@ public class BattleController {
             fightButton.setVisible(true);
 
             friendlyPokemon.setPokemon(trainer.getFirePokemon());
-            enemyPokemon.setPokemon(enemyTrainer.getFirePokemon());
+            enemyPokemon.setPokemon(enemyTrainer.getRandomPokemon());
 
             sequentialTransition.play();
         }
@@ -109,7 +121,7 @@ public class BattleController {
             fightButton.setVisible(true);
 
             friendlyPokemon.setPokemon(trainer.getWaterPokemon());
-            enemyPokemon.setPokemon(enemyTrainer.getWaterPokemon());
+            enemyPokemon.setPokemon(enemyTrainer.getRandomPokemon());
 
             sequentialTransition.play();
         }
@@ -123,13 +135,25 @@ public class BattleController {
             fightButton.setVisible(true);
 
             friendlyPokemon.setPokemon(trainer.getGrassPokemon());
-            enemyPokemon.setPokemon(enemyTrainer.getGrassPokemon());
+            enemyPokemon.setPokemon(enemyTrainer.getRandomPokemon());
 
             sequentialTransition.play();
         }
     }
 
+    public void checkWin(TYPE player, TYPE enemy) {
+        if ((player == TYPE.FIRE && enemy == TYPE.GRASS) || (player == TYPE.WATER && enemy == TYPE.FIRE) || (player == TYPE.GRASS && enemy == TYPE.WATER)) {
+            enemyPokemon.startHurtAnimation();
+            changeEnemyHealth(0);
+        } else if ((player == TYPE.FIRE && enemy == TYPE.WATER) || (player == TYPE.GRASS && enemy == TYPE.FIRE) || (player == TYPE.WATER && enemy == TYPE.GRASS)) {
+            friendlyPokemon.startHurtAnimation();
+            changePlayerHealth(0);
+        }
+    }
+
     public void changePlayerHealth(double amountPercent) {
+
+        topPane.getChildren().remove(playerHealth);
 
         if (amountPercent > 1 || amountPercent < 0)
             return;
@@ -146,12 +170,14 @@ public class BattleController {
             color = Color.DARKRED;
         }
 
-        Rectangle health = new Rectangle(195, 124, amount, 2);
-        health.setFill(color);
-        topPane.getChildren().add(health);
+        playerHealth = new Rectangle(195, 124, amount, 2);
+        playerHealth.setFill(color);
+        topPane.getChildren().add(playerHealth);
     }
 
     public void changeEnemyHealth(double amountPercent) {
+
+        topPane.getChildren().remove(enemyHealth);
 
         if (amountPercent > 1 || amountPercent < 0)
             return;
@@ -168,9 +194,9 @@ public class BattleController {
             color = Color.RED;
         }
 
-        Rectangle health = new Rectangle(26, 47, amount, 2);
-        health.setFill(color);
-        topPane.getChildren().add(health);
+        enemyHealth = new Rectangle(26, 47, amount, 2);
+        enemyHealth.setFill(color);
+        topPane.getChildren().add(enemyHealth);
     }
 
 }
