@@ -7,12 +7,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
 import sample.Selectors.PokemonSelector;
-
-import java.util.TimerTask;
+import sample.Selectors.TrainerSelector;
 
 public class BattleController {
 
@@ -23,6 +20,9 @@ public class BattleController {
 
     private Pokemon friendlyPokemon;
     private Pokemon enemyPokemon;
+
+    private Trainer trainer;
+    private Trainer enemyTrainer;
 
     private final Point enemyTrainerPos = new Point(210, 30);
     private final Point enemyTrainerPokemon = new Point(140, 20);
@@ -54,18 +54,11 @@ public class BattleController {
     @FXML
     public void initialize() {
 
-        ImageView trainer = new ImageView(new Image("resources/images/trainers/maleTrainer.png"));
-        friendlyPokemon = new Pokemon(PokemonSelector.BULBOSAUR);
-        friendlyPokemon.showBack();
+        trainer = new Trainer(TrainerSelector.FEMALE_TRAINER, false);
+        enemyTrainer = new Trainer(TrainerSelector.FEMALE_TRAINER, true);
 
-        ImageView enemyTrainer = new ImageView(new Image("resources/images/trainers/maleTrainerFront.png"));
-        enemyPokemon = new Pokemon(PokemonSelector.BULBOSAUR);
-        enemyPokemon.showFront();
-
-        trainer.relocate(0, 63);
-        friendlyPokemon.relocate(55, 63);
-        enemyPokemon.relocate(140, 30);
-        enemyTrainer.relocate(210, 30);
+        friendlyPokemon = new Pokemon(PokemonSelector.BULBOSAUR, false);
+        enemyPokemon = new Pokemon(PokemonSelector.BULBOSAUR, true);
 
         layout.getChildren().addAll(enemyTrainer, trainer, friendlyPokemon, enemyPokemon);
         topPane.getChildren().add(layout);
@@ -80,7 +73,8 @@ public class BattleController {
             fireButton.setVisible(true);
             waterButton.setVisible(true);
             grassButton.setVisible(true);
-            friendlyPokemon.startBackTimer();
+            friendlyPokemon.startAttackTimer();
+            trainer.startTimer();
         }
     }
 

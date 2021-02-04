@@ -7,74 +7,48 @@ import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import sample.Selectors.PokemonSelector;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class Pokemon extends ImageView {
-    private final Image frontImageOne;
-    private final Image frontImageTwo;
 
-    private final Image backImageOne;
-    private final Image backImageTwo;
+    private ArrayList<Image> images = new ArrayList<Image>();
 
-    final Timeline backTimer = new Timeline();
-    final Timeline frontTimer = new Timeline();
+    final Timeline attackAnimation = new Timeline();
 
-    public Pokemon(PokemonSelector pokemonSprites) {
-        frontImageOne = pokemonSprites.getFrontImageOne();
-        frontImageTwo = pokemonSprites.getFrontImageTwo();
+    public Pokemon(PokemonSelector pokemonSprites, boolean isEnemy) {
 
-        backImageOne = pokemonSprites.getBackImageOne();
-        backImageTwo = pokemonSprites.getBackImageTwo();
+        if (isEnemy) {
+            images = pokemonSprites.getEnemyImages();
+            relocate(140, 30);
+        } else {
+            images = pokemonSprites.getPlayerImages();
+            relocate(55, 63);
+        }
 
-        generateBackTimer();
-        generateFrontTimer();
+        setImage(images.get(0));
+
+        generateAttackTimer();
     }
 
-    private void generateBackTimer() {
-        backTimer.setCycleCount(1);
-        backTimer.setAutoReverse(false);
-        final Collection<KeyFrame> frames = backTimer.getKeyFrames();
+    private void generateAttackTimer() {
+        attackAnimation.setCycleCount(1);
+        attackAnimation.setAutoReverse(false);
+        final Collection<KeyFrame> frames = attackAnimation.getKeyFrames();
         Duration frameGap = Duration.millis(256);
         Duration frameTime = Duration.ZERO;
 
-        frameTime = frameTime.add(frameGap);
-        frames.add(new KeyFrame(frameTime, e-> setImage(backImageTwo)));
+        for (Image image : images) {
+            frameTime = frameTime.add(frameGap);
+            frames.add(new KeyFrame(frameTime, e-> setImage(image)));
+        }
 
         frameTime = frameTime.add(frameGap);
-        frames.add(new KeyFrame(frameTime, e-> setImage(backImageOne)));
+        frames.add(new KeyFrame(frameTime, e-> setImage(images.get(0))));
     }
 
-    private void generateFrontTimer() {
-        frontTimer.setCycleCount(1);
-        frontTimer.setAutoReverse(false);
-        final Collection<KeyFrame> frames = frontTimer.getKeyFrames();
-        Duration frameGap = Duration.millis(256);
-        Duration frameTime = Duration.ZERO;
-
-        frameTime = frameTime.add(frameGap);
-        frames.add(new KeyFrame(frameTime, e-> setImage(frontImageOne)));
-
-        frameTime = frameTime.add(frameGap);
-        frames.add(new KeyFrame(frameTime, e-> setImage(frontImageTwo)));
-
-        frameTime = frameTime.add(frameGap);
-        frames.add(new KeyFrame(frameTime, e-> setImage(frontImageOne)));
-    }
-
-    public void showFront() {
-        setImage(frontImageOne);
-    }
-
-    public void showBack() {
-        setImage(backImageOne);
-    }
-
-    public void startBackTimer() {
-        backTimer.play();
-    }
-
-    public void startFrontTimer() {
-        frontTimer.play();
+    public void startAttackTimer() {
+        attackAnimation.play();
     }
 
 }

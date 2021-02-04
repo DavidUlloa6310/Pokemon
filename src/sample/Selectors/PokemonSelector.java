@@ -2,34 +2,26 @@ package sample.Selectors;
 
 import javafx.scene.image.Image;
 
+import java.util.ArrayList;
+
 public enum PokemonSelector {
-    BULBOSAUR("resources/images/pokemon/front/bulbosaur_1.png", "resources/images/pokemon/front/bulbosaur_2.png", "resources/images/pokemon/back/bulbosaur_1.png", "resources/images/pokemon/back/bulbosaur_2.png");
+    BULBOSAUR("resources/images/pokemon/enemy/bulbosaurOne.png", "resources/images/pokemon/enemy/bulbosaurTwo.png", "resources/images/pokemon/player/bulbosaurOne.png", "resources/images/pokemon/player/bulbosaurTwo.png");
 
-    private final Image frontImageOne;
-    private final Image frontImageTwo;
-    private final Image backImageOne;
-    private final Image backImageTwo;
+    private final ArrayList<Image> playerImages = new ArrayList<Image>();
+    private final ArrayList<Image> enemyImages = new ArrayList<Image>();
 
-    PokemonSelector(String frontImageOne, String frontImageTwo, String backImageOne, String backImageTwo) {
-        this.frontImageOne = new Image(frontImageOne);
-        this.frontImageTwo = new Image(frontImageTwo);
-        this.backImageOne = new Image(backImageOne);
-        this.backImageTwo = new Image(backImageTwo);
+    PokemonSelector(String enemyImageOne, String enemyImageTwo, String playerImageOne, String playerImageTwo) {
+        enemyImages.add(new Image(enemyImageOne));
+        enemyImages.add(new Image(enemyImageTwo));
+        playerImages.add(new Image(playerImageOne));
+        playerImages.add(new Image(playerImageTwo));
     }
 
-    public Image getFrontImageOne() {
-        return frontImageOne;
+    public ArrayList<Image> getPlayerImages() {
+        return playerImages;
     }
 
-    public Image getFrontImageTwo() {
-        return frontImageTwo;
-    }
-
-    public Image getBackImageOne() {
-        return backImageOne;
-    }
-
-    public Image getBackImageTwo() {
-        return backImageTwo;
+    public ArrayList<Image> getEnemyImages() {
+        return enemyImages;
     }
 }
