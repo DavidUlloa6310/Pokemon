@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
@@ -10,9 +11,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 import sample.Selectors.POKEMON;
 import sample.Selectors.TRAINER;
 import sample.Selectors.TYPE;
+
+import javax.swing.*;
 
 public class BattleController {
 
@@ -27,10 +31,20 @@ public class BattleController {
     private Trainer trainer;
     private Trainer enemyTrainer;
 
-    private final SequentialTransition sequentialTransition = new SequentialTransition();
+    private final SequentialTransition battle = new SequentialTransition();
+
     private final ParallelTransition despawnPokemon = new ParallelTransition();
+    private final ParallelTransition spawnPokemon = new ParallelTransition();
+    private final ParallelTransition attack = new ParallelTransition();
+
     private final PauseTransition showPokemon = new PauseTransition();
     private final PauseTransition checkDamage = new PauseTransition();
+
+    private final FadeTransition enemyTrainerLost = new FadeTransition();
+    private final FadeTransition enemyTrainerRespawn = new FadeTransition();
+    private final SequentialTransition resetEnemy = new SequentialTransition(enemyTrainerLost, enemyTrainerRespawn);
+
+    private final FadeTransition friendlyTrainerLost = new FadeTransition();
 
     private Rectangle playerHealth;
     private Rectangle enemyHealth;
@@ -80,16 +94,20 @@ public class BattleController {
         changePlayerHealth(trainer.getHealth());
         changeEnemyHealth(enemyTrainer.getHealth());
 
+        //ANIMATIONS
+
         showPokemon.setOnFinished(e -> {
             friendlyPokemon.setVisible(true);
             enemyPokemon.setVisible(true);
         });
 
         despawnPokemon.getChildren().addAll(friendlyPokemon.getDespawnTransition(), enemyPokemon.getDespawnTransition());
+        spawnPokemon.getChildren().addAll(friendlyPokemon.getSpawnTransition(), enemyPokemon.getSpawnTransition());
+        attack.getChildren().addAll(friendlyPokemon.getAttackAnimation(), enemyPokemon.getAttackAnimation());
 
-        sequentialTransition.getChildren().addAll(trainer.getStartTimer(), showPokemon, friendlyPokemon.getSpawnTransition(), friendlyPokemon.getAttackAnimation(), enemyPokemon.getSpawnTransition(), enemyPokemon.getAttackAnimation(), checkDamage, despawnPokemon);
+        battle.getChildren().addAll(trainer.getStartTimer(), showPokemon, spawnPokemon, attack, checkDamage, despawnPokemon);
 
-        sequentialTransition.setOnFinished(e -> {
+        battle.setOnFinished(e -> {
             fightButton.setVisible(true);
             runButton.setVisible(true);
         });
@@ -97,6 +115,10 @@ public class BattleController {
         checkDamage.setOnFinished(e -> {
             checkWin(friendlyPokemon.getType(), enemyPokemon.getType());
         });
+
+        generateEnemyTrainerLost();
+        generateEnemyTrainerRespawn();
+        generateFriendlyTrainerLost();
     }
 
     public void fight() {
@@ -118,7 +140,7 @@ public class BattleController {
             friendlyPokemon.setPokemon(trainer.getFirePokemon());
             enemyPokemon.setPokemon(enemyTrainer.getRandomPokemon());
 
-            sequentialTransition.play();
+            battle.play();
         }
     }
 
@@ -131,7 +153,7 @@ public class BattleController {
             friendlyPokemon.setPokemon(trainer.getWaterPokemon());
             enemyPokemon.setPokemon(enemyTrainer.getRandomPokemon());
 
-            sequentialTransition.play();
+            battle.play();
         }
     }
 
@@ -144,20 +166,26 @@ public class BattleController {
             friendlyPokemon.setPokemon(trainer.getGrassPokemon());
             enemyPokemon.setPokemon(enemyTrainer.getRandomPokemon());
 
-            sequentialTransition.play();
+            battle.play();
         }
     }
 
     public void checkWin(TYPE player, TYPE enemy) {
         if ((player == TYPE.FIRE && enemy == TYPE.GRASS) || (player == TYPE.WATER && enemy == TYPE.FIRE) || (player == TYPE.GRASS && enemy == TYPE.WATER)) {
-            enemyTrainer.removeHealth(.25);
+            enemyTrainer.removeHealth(1);
             enemyPokemon.startHurtAnimation();
             changeEnemyHealth(enemyTrainer.getHealth());
+            if (enemyTrainer.getHealth() <= 0) {
+                enemyTrainer.startDespawnTimer();
+                resetEnemy.play();
+            }
         } else if ((player == TYPE.FIRE && enemy == TYPE.WATER) || (player == TYPE.GRASS && enemy == TYPE.FIRE) || (player == TYPE.WATER && enemy == TYPE.GRASS)) {
-            trainer.removeHealth(.25);
+            trainer.removeHealth(1);
             friendlyPokemon.startHurtAnimation();
             changePlayerHealth(trainer.getHealth());
-
+            if (trainer.getHealth() <= 0) {
+                friendlyTrainerLost.play();
+            }
         }
     }
 
@@ -207,6 +235,50 @@ public class BattleController {
         enemyHealth = new Rectangle(26, 47, amount, 2);
         enemyHealth.setFill(color);
         topPane.getChildren().add(enemyHealth);
+    }
+
+    public void generateEnemyTrainerLost() {
+        enemyTrainerLost.setNode(topPane);
+        enemyTrainerLost.setDuration(new Duration(750));
+        enemyTrainerLost.setFromValue(1);
+        enemyTrainerLost.setToValue(0);
+        enemyTrainerLost.setCycleCount(1);
+        enemyTrainerLost.setAutoReverse(false);
+        enemyTrainerLost.setDelay(Duration.millis(1000));
+
+        enemyTrainerLost.setOnFinished(e -> {
+            enemyTrainer.reset();
+            changeEnemyHealth(enemyTrainer.getHealth());
+        });
+    }
+
+    public void generateEnemyTrainerRespawn() {
+        enemyTrainerRespawn.setNode(topPane);
+        enemyTrainerRespawn.setDuration(new Duration(750));
+        enemyTrainerRespawn.setFromValue(0);
+        enemyTrainerRespawn.setToValue(1);
+        enemyTrainerRespawn.setCycleCount(1);
+        enemyTrainerRespawn.setAutoReverse(false);
+        enemyTrainerRespawn.setDelay(Duration.millis(1000));
+
+        enemyTrainerRespawn.setOnFinished(e -> {
+            enemyTrainer.startSpawnTimer();
+        });
+    }
+
+    public void generateFriendlyTrainerLost() {
+        friendlyTrainerLost.setNode(topPane);
+        friendlyTrainerLost.setDuration(new Duration(750));
+        friendlyTrainerLost.setFromValue(1);
+        friendlyTrainerLost.setToValue(0);
+        friendlyTrainerLost.setCycleCount(1);
+        friendlyTrainerLost.setAutoReverse(false);
+        friendlyTrainerLost.setDelay(Duration.millis(1000));
+
+        friendlyTrainerLost.setOnFinished(e -> {
+            JOptionPane.showMessageDialog(null, "You blacked out");
+            SceneLibrary.startMenu();
+        });
     }
 
 }

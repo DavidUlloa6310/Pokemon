@@ -3,14 +3,16 @@ package sample.Selectors;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public enum TRAINER {
 
     MALE_TRAINER("resources/images/trainers/player/maleTrainer/maleTrainerOne.png", "resources/images/trainers/player/maleTrainer/maleTrainerTwo.png", "resources/images/trainers/player/maleTrainer/maleTrainerThree.png", "resources/images/trainers/player/maleTrainer/maleTrainerFour.png", "resources/images/trainers/player/maleTrainer/maleTrainerFive.png", "resources/images/trainers/player/maleTrainer/maleTrainerSix.png", "resources/images/trainers/player/maleTrainer/maleTrainerSeven.png", "resources/images/trainers/player/maleTrainer/maleTrainerEight.png", "resources/images/trainers/enemy/maleTrainer.png"),
     FEMALE_TRAINER("resources/images/trainers/player/femaleTrainer/femaleTrainerOne.png", "resources/images/trainers/player/femaleTrainer/femaleTrainerTwo.png", "resources/images/trainers/player/femaleTrainer/femaleTrainerThree.png", "resources/images/trainers/player/femaleTrainer/femaleTrainerFour.png", "resources/images/trainers/player/femaleTrainer/femaleTrainerFive.png", "resources/images/trainers/player/femaleTrainer/femaleTrainerSix.png", "resources/images/trainers/player/femaleTrainer/femaleTrainerSeven.png", "resources/images/trainers/player/femaleTrainer/femaleTrainerEight.png", "resources/images/trainers/enemy/femaleTrainer.png");
 
-    private Image frontImage;
-    private ArrayList<Image> frames = new ArrayList<Image>();
+    private final Image frontImage;
+    private final ArrayList<Image> frames = new ArrayList<Image>();
+    private static final TRAINER[] trainers = {MALE_TRAINER, FEMALE_TRAINER};
 
 
     TRAINER(String frameOne, String frameTwo, String frameThree, String frameFour, String frameFive, String frameSix, String frameSeven, String frameEight, String imagePath) {
@@ -36,5 +38,10 @@ public enum TRAINER {
 
     public ArrayList<Image> getFrames() {
         return frames;
+    }
+
+    public static TRAINER getRandomTrainer() {
+        Random random = new Random();
+        return trainers[random.nextInt(trainers.length)];
     }
 }
