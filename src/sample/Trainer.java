@@ -53,17 +53,17 @@ public class Trainer extends ImageView {
         }
     }
 
-    public void changeHealth(double health) {
+    public void removeHealth(double health) {
         if (health > 1 || health < 0)
             return;
-        this.health = health;
+        this.health = this.health - health;
     }
 
     public void generateStartTimer() {
         startTimer.setCycleCount(1);
-        startTimer.setAutoReverse(false);
+        startTimer.setAutoReverse(true);
         final Collection<KeyFrame> frames = startTimer.getKeyFrames();
-        Duration frameGap = Duration.millis(150);
+        Duration frameGap = Duration.millis(100);
         Duration frameTime = Duration.ZERO;
 
         for (Image image : images) {

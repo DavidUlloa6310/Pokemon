@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.animation.ParallelTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
 import javafx.fxml.FXML;
@@ -9,7 +10,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
 import sample.Selectors.POKEMON;
 import sample.Selectors.TRAINER;
 import sample.Selectors.TYPE;
@@ -28,6 +28,7 @@ public class BattleController {
     private Trainer enemyTrainer;
 
     private final SequentialTransition sequentialTransition = new SequentialTransition();
+    private final ParallelTransition despawnPokemon = new ParallelTransition();
     private final PauseTransition showPokemon = new PauseTransition();
     private final PauseTransition checkDamage = new PauseTransition();
 
@@ -42,6 +43,9 @@ public class BattleController {
 
     @FXML
     private ImageView fightButton;
+
+    @FXML
+    private ImageView runButton;
 
     @FXML
     private ImageView fireButton;
@@ -64,7 +68,7 @@ public class BattleController {
     @FXML
     public void initialize() {
 
-        trainer = new Trainer(TRAINER.FEMALE_TRAINER, false);
+        trainer = new Trainer(TRAINER.MALE_TRAINER, false);
         enemyTrainer = new Trainer(TRAINER.FEMALE_TRAINER, true);
 
         friendlyPokemon = new Pokemon(POKEMON.BULBOSAUR, false);
@@ -81,18 +85,24 @@ public class BattleController {
             enemyPokemon.setVisible(true);
         });
 
-        sequentialTransition.getChildren().addAll(trainer.getStartTimer(), showPokemon, friendlyPokemon.getFadeTransition(), friendlyPokemon.getAttackAnimation(), enemyPokemon.getFadeTransition(), enemyPokemon.getAttackAnimation());
+        despawnPokemon.getChildren().addAll(friendlyPokemon.getDespawnTransition(), enemyPokemon.getDespawnTransition());
+
+        sequentialTransition.getChildren().addAll(trainer.getStartTimer(), showPokemon, friendlyPokemon.getSpawnTransition(), friendlyPokemon.getAttackAnimation(), enemyPokemon.getSpawnTransition(), enemyPokemon.getAttackAnimation(), checkDamage, despawnPokemon);
+
+        sequentialTransition.setOnFinished(e -> {
+            fightButton.setVisible(true);
+            runButton.setVisible(true);
+        });
 
         checkDamage.setOnFinished(e -> {
             checkWin(friendlyPokemon.getType(), enemyPokemon.getType());
         });
-
-        sequentialTransition.getChildren().add(checkDamage);
     }
 
     public void fight() {
         if (fightButton.isVisible()) {
             fightButton.setVisible(false);
+            runButton.setVisible(false);
             fireButton.setVisible(true);
             waterButton.setVisible(true);
             grassButton.setVisible(true);
@@ -104,7 +114,6 @@ public class BattleController {
             fireButton.setVisible(false);
             waterButton.setVisible(false);
             grassButton.setVisible(false);
-            fightButton.setVisible(true);
 
             friendlyPokemon.setPokemon(trainer.getFirePokemon());
             enemyPokemon.setPokemon(enemyTrainer.getRandomPokemon());
@@ -118,7 +127,6 @@ public class BattleController {
             fireButton.setVisible(false);
             waterButton.setVisible(false);
             grassButton.setVisible(false);
-            fightButton.setVisible(true);
 
             friendlyPokemon.setPokemon(trainer.getWaterPokemon());
             enemyPokemon.setPokemon(enemyTrainer.getRandomPokemon());
@@ -132,7 +140,6 @@ public class BattleController {
             fireButton.setVisible(false);
             waterButton.setVisible(false);
             grassButton.setVisible(false);
-            fightButton.setVisible(true);
 
             friendlyPokemon.setPokemon(trainer.getGrassPokemon());
             enemyPokemon.setPokemon(enemyTrainer.getRandomPokemon());
@@ -143,11 +150,14 @@ public class BattleController {
 
     public void checkWin(TYPE player, TYPE enemy) {
         if ((player == TYPE.FIRE && enemy == TYPE.GRASS) || (player == TYPE.WATER && enemy == TYPE.FIRE) || (player == TYPE.GRASS && enemy == TYPE.WATER)) {
+            enemyTrainer.removeHealth(.25);
             enemyPokemon.startHurtAnimation();
-            changeEnemyHealth(0);
+            changeEnemyHealth(enemyTrainer.getHealth());
         } else if ((player == TYPE.FIRE && enemy == TYPE.WATER) || (player == TYPE.GRASS && enemy == TYPE.FIRE) || (player == TYPE.WATER && enemy == TYPE.GRASS)) {
+            trainer.removeHealth(.25);
             friendlyPokemon.startHurtAnimation();
-            changePlayerHealth(0);
+            changePlayerHealth(trainer.getHealth());
+
         }
     }
 
@@ -191,7 +201,7 @@ public class BattleController {
         } else if (amountPercent >= .33) {
             color = Color.GOLD;
         } else {
-            color = Color.RED;
+            color = Color.DARKRED;
         }
 
         enemyHealth = new Rectangle(26, 47, amount, 2);

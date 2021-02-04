@@ -24,8 +24,8 @@ public class Pokemon extends ImageView {
 
     final Timeline attackAnimation = new Timeline();
     final Timeline hurtAnimation = new Timeline();
-    final FadeTransition fadeTransition = new FadeTransition();
-    final FadeTransition deathTransition = new FadeTransition();
+    final FadeTransition spawnTransition = new FadeTransition();
+    final FadeTransition despawnTransition = new FadeTransition();
 
     public Pokemon(POKEMON pokemonSprites, boolean isEnemy) {
         this.isEnemy = isEnemy;
@@ -36,6 +36,7 @@ public class Pokemon extends ImageView {
 
         generateAttackAnimation();
         generateSpawnAnimation();
+        generateDespawnAnimation();
         generateHurtAnimation();
     }
 
@@ -56,19 +57,29 @@ public class Pokemon extends ImageView {
     }
 
     private void generateSpawnAnimation() {
-        fadeTransition.setNode(this);
-        fadeTransition.setDuration(new Duration(1000));
-        fadeTransition.setFromValue(0);
-        fadeTransition.setToValue(1);
-        fadeTransition.setCycleCount(1);
-        fadeTransition.setAutoReverse(false);
+        spawnTransition.setNode(this);
+        spawnTransition.setDuration(new Duration(750));
+        spawnTransition.setFromValue(0);
+        spawnTransition.setToValue(1);
+        spawnTransition.setCycleCount(1);
+        spawnTransition.setAutoReverse(false);
+    }
+
+    private void generateDespawnAnimation() {
+        despawnTransition.setNode(this);
+        despawnTransition.setDuration(new Duration(750));
+        despawnTransition.setFromValue(1);
+        despawnTransition.setToValue(0);
+        despawnTransition.setCycleCount(1);
+        despawnTransition.setAutoReverse(false);
+        despawnTransition.setDelay(Duration.millis(1000));
     }
 
     private void generateHurtAnimation() {
-        hurtAnimation.setCycleCount(2);
+        hurtAnimation.setCycleCount(3);
         hurtAnimation.setAutoReverse(false);
         final Collection<KeyFrame> frames = hurtAnimation.getKeyFrames();
-        Duration frameGap = Duration.millis(256);
+        Duration frameGap = Duration.millis(100);
         Duration frameTime = Duration.ZERO;
 
         if (isEnemy) {
@@ -107,7 +118,11 @@ public class Pokemon extends ImageView {
     }
 
     public void startSpawnAnimation() {
-        fadeTransition.play();
+        spawnTransition.play();
+    }
+
+    public FadeTransition getDespawnTransition() {
+        return despawnTransition;
     }
 
     public void startHurtAnimation() {
@@ -118,8 +133,8 @@ public class Pokemon extends ImageView {
         return attackAnimation;
     }
 
-    public FadeTransition getFadeTransition() {
-        return fadeTransition;
+    public FadeTransition getSpawnTransition() {
+        return spawnTransition;
     }
 
     public Timeline getHurtAnimation() {

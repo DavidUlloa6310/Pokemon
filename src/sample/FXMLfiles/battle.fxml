@@ -67,7 +67,7 @@
                         <Image url="@../../resources/images/buttons/battleButton.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="48.0" fitWidth="81.0" layoutX="88.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="runButton" fitHeight="48.0" fitWidth="81.0" layoutX="88.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../resources/images/buttons/runButton.png" />
                      </image>
