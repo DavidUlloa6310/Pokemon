@@ -27,6 +27,7 @@ public enum TRAINER {
 
     TRAINER(String imagePath) {
         frontImage = new Image(imagePath);
+        frames.add(frontImage);
     }
 
     public Image getFrontImage() {
