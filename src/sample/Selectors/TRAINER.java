@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 
-public enum TrainerSelector {
+public enum TRAINER {
 
     MALE_TRAINER("resources/images/trainers/player/maleTrainer/maleTrainerOne.png", "resources/images/trainers/player/maleTrainer/maleTrainerTwo.png", "resources/images/trainers/player/maleTrainer/maleTrainerThree.png", "resources/images/trainers/player/maleTrainer/maleTrainerFour.png", "resources/images/trainers/player/maleTrainer/maleTrainerFive.png", "resources/images/trainers/player/maleTrainer/maleTrainerSix.png", "resources/images/trainers/player/maleTrainer/maleTrainerSeven.png", "resources/images/trainers/player/maleTrainer/maleTrainerEight.png", "resources/images/trainers/enemy/maleTrainer.png"),
     FEMALE_TRAINER("resources/images/trainers/player/femaleTrainer/femaleTrainerOne.png", "resources/images/trainers/player/femaleTrainer/femaleTrainerTwo.png", "resources/images/trainers/player/femaleTrainer/femaleTrainerThree.png", "resources/images/trainers/player/femaleTrainer/femaleTrainerFour.png", "resources/images/trainers/player/femaleTrainer/femaleTrainerFive.png", "resources/images/trainers/player/femaleTrainer/femaleTrainerSix.png", "resources/images/trainers/player/femaleTrainer/femaleTrainerSeven.png", "resources/images/trainers/player/femaleTrainer/femaleTrainerEight.png", "resources/images/trainers/enemy/femaleTrainer.png");
@@ -13,7 +13,7 @@ public enum TrainerSelector {
     private ArrayList<Image> frames = new ArrayList<Image>();
 
 
-    TrainerSelector(String frameOne, String frameTwo, String frameThree, String frameFour, String frameFive, String frameSix, String frameSeven, String frameEight, String imagePath) {
+    TRAINER(String frameOne, String frameTwo, String frameThree, String frameFour, String frameFive, String frameSix, String frameSeven, String frameEight, String imagePath) {
         frontImage = new Image(imagePath);
         frames.add(new Image(frameOne));
         frames.add(new Image(frameTwo));
@@ -25,7 +25,7 @@ public enum TrainerSelector {
         frames.add(new Image(frameEight));
     }
 
-    TrainerSelector(String imagePath) {
+    TRAINER(String imagePath) {
         frontImage = new Image(imagePath);
     }
 

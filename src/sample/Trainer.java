@@ -5,7 +5,8 @@ import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
-import sample.Selectors.TrainerSelector;
+import sample.Selectors.POKEMON;
+import sample.Selectors.TRAINER;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,20 +19,20 @@ public class Trainer extends ImageView {
 
     private Timeline startTimer = new Timeline();
 
-    private Pokemon firePokemon;
-    private Pokemon waterPokemon;
-    private Pokemon grassPokemon;
+    private POKEMON firePokemon = POKEMON.CHARMANDER;
+    private POKEMON waterPokemon = POKEMON.SQUIRTLE;
+    private POKEMON grassPokemon = POKEMON.BULBOSAUR;
 
-    public Trainer(TrainerSelector trainerSelector, boolean isEnemy) {
+    public Trainer(TRAINER TRAINER, boolean isEnemy) {
 
-        this.images = trainerSelector.getFrames();
+        this.images = TRAINER.getFrames();
         if (!isEnemy) {
             relocate(0, 63);
             generateStartTimer();
             setImage(images.get(0));
         } else {
             relocate(210, 30);
-            setImage(trainerSelector.getFrontImage());
+            setImage(TRAINER.getFrontImage());
         }
 
     }
@@ -53,5 +54,21 @@ public class Trainer extends ImageView {
 
     public void startTimer() {
         startTimer.play();
+    }
+
+    public Timeline getStartTimer() {
+        return startTimer;
+    }
+
+    public POKEMON getFirePokemon() {
+        return firePokemon;
+    }
+
+    public POKEMON getWaterPokemon() {
+        return waterPokemon;
+    }
+
+    public POKEMON getGrassPokemon() {
+        return grassPokemon;
     }
 }

@@ -1,15 +1,16 @@
 package sample;
 
+import javafx.animation.PauseTransition;
+import javafx.animation.SequentialTransition;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import sample.Selectors.PokemonSelector;
-import sample.Selectors.TrainerSelector;
+import sample.Selectors.POKEMON;
+import sample.Selectors.TRAINER;
 
 public class BattleController {
 
@@ -23,6 +24,9 @@ public class BattleController {
 
     private Trainer trainer;
     private Trainer enemyTrainer;
+
+    private final SequentialTransition sequentialTransition = new SequentialTransition();
+    private final PauseTransition showPokemon = new PauseTransition();
 
     private final Point enemyTrainerPos = new Point(210, 30);
     private final Point enemyTrainerPokemon = new Point(140, 20);
@@ -54,17 +58,24 @@ public class BattleController {
     @FXML
     public void initialize() {
 
-        trainer = new Trainer(TrainerSelector.FEMALE_TRAINER, false);
-        enemyTrainer = new Trainer(TrainerSelector.FEMALE_TRAINER, true);
+        trainer = new Trainer(TRAINER.FEMALE_TRAINER, false);
+        enemyTrainer = new Trainer(TRAINER.FEMALE_TRAINER, true);
 
-        friendlyPokemon = new Pokemon(PokemonSelector.BULBOSAUR, false);
-        enemyPokemon = new Pokemon(PokemonSelector.BULBOSAUR, true);
+        friendlyPokemon = new Pokemon(POKEMON.BULBOSAUR, false);
+        enemyPokemon = new Pokemon(POKEMON.BULBOSAUR, true);
 
         layout.getChildren().addAll(enemyTrainer, trainer, friendlyPokemon, enemyPokemon);
         topPane.getChildren().add(layout);
 
         changePlayerHealth(1);
         changeEnemyHealth(.2);
+
+        showPokemon.setOnFinished(e -> {
+            friendlyPokemon.setVisible(true);
+            enemyPokemon.setVisible(true);
+        });
+
+        sequentialTransition.getChildren().addAll(trainer.getStartTimer(), showPokemon, friendlyPokemon.getFadeTransition(), friendlyPokemon.getAttackAnimation(), enemyPokemon.getFadeTransition(), enemyPokemon.getAttackAnimation());
     }
 
     public void fight() {
@@ -73,8 +84,6 @@ public class BattleController {
             fireButton.setVisible(true);
             waterButton.setVisible(true);
             grassButton.setVisible(true);
-            friendlyPokemon.startAttackTimer();
-            trainer.startTimer();
         }
     }
 
@@ -84,6 +93,11 @@ public class BattleController {
             waterButton.setVisible(false);
             grassButton.setVisible(false);
             fightButton.setVisible(true);
+
+            friendlyPokemon.setPokemon(trainer.getFirePokemon());
+            enemyPokemon.setPokemon(enemyTrainer.getFirePokemon());
+
+            sequentialTransition.play();
         }
     }
 
@@ -93,6 +107,11 @@ public class BattleController {
             waterButton.setVisible(false);
             grassButton.setVisible(false);
             fightButton.setVisible(true);
+
+            friendlyPokemon.setPokemon(trainer.getWaterPokemon());
+            enemyPokemon.setPokemon(enemyTrainer.getWaterPokemon());
+
+            sequentialTransition.play();
         }
     }
 
@@ -102,6 +121,11 @@ public class BattleController {
             waterButton.setVisible(false);
             grassButton.setVisible(false);
             fightButton.setVisible(true);
+
+            friendlyPokemon.setPokemon(trainer.getGrassPokemon());
+            enemyPokemon.setPokemon(enemyTrainer.getGrassPokemon());
+
+            sequentialTransition.play();
         }
     }
 
@@ -119,7 +143,7 @@ public class BattleController {
         } else if (amountPercent >= .33) {
             color = Color.GOLD;
         } else {
-            color = Color.RED;
+            color = Color.DARKRED;
         }
 
         Rectangle health = new Rectangle(195, 124, amount, 2);
