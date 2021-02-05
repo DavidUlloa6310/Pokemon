@@ -18,12 +18,11 @@ import sample.Selectors.TYPE;
 
 import javax.swing.*;
 
-public class BattleController {
+public class EndlessController {
 
     private final Group layout = new Group();
 
-    private final Point playerTrainerPos = new Point(0, 63);
-    private final Point playerTrainerPokemon =  new Point(55, 63);
+    private int level = 1;
 
     private Pokemon friendlyPokemon;
     private Pokemon enemyPokemon;
@@ -48,9 +47,6 @@ public class BattleController {
 
     private Rectangle playerHealth;
     private Rectangle enemyHealth;
-
-    private final Point enemyTrainerPos = new Point(210, 30);
-    private final Point enemyTrainerPokemon = new Point(140, 20);
 
     @FXML
     private Pane topPane;
@@ -140,6 +136,7 @@ public class BattleController {
             friendlyPokemon.setPokemon(trainer.getFirePokemon());
             enemyPokemon.setPokemon(enemyTrainer.getRandomPokemon());
 
+            textBoxLabel.setText("");
             battle.play();
         }
     }
@@ -153,6 +150,7 @@ public class BattleController {
             friendlyPokemon.setPokemon(trainer.getWaterPokemon());
             enemyPokemon.setPokemon(enemyTrainer.getRandomPokemon());
 
+            textBoxLabel.setText("");
             battle.play();
         }
     }
@@ -166,26 +164,57 @@ public class BattleController {
             friendlyPokemon.setPokemon(trainer.getGrassPokemon());
             enemyPokemon.setPokemon(enemyTrainer.getRandomPokemon());
 
+            textBoxLabel.setText("");
             battle.play();
         }
     }
 
     public void checkWin(TYPE player, TYPE enemy) {
+
+        String message = "";
+
         if ((player == TYPE.FIRE && enemy == TYPE.GRASS) || (player == TYPE.WATER && enemy == TYPE.FIRE) || (player == TYPE.GRASS && enemy == TYPE.WATER)) {
-            enemyTrainer.removeHealth(1);
+
+            double damage = (double) 1 / level;
+
+            if (Math.random() <= .1) {
+                damage = damage * 3;
+                textBoxLabel.setText("You landed a critical hit and dealt extra damage!");
+            } else {
+                textBoxLabel.setText("You played " + player + ", while your opponent played " + enemy + ". You dealt damage.");
+            }
+
+            enemyTrainer.removeHealth((double) 1/ level);
             enemyPokemon.startHurtAnimation();
             changeEnemyHealth(enemyTrainer.getHealth());
+
+
             if (enemyTrainer.getHealth() <= 0) {
+                textBoxLabel.setText("You have defeated the enemy trainer!");
                 enemyTrainer.startDespawnTimer();
                 resetEnemy.play();
+                level++;
             }
         } else if ((player == TYPE.FIRE && enemy == TYPE.WATER) || (player == TYPE.GRASS && enemy == TYPE.FIRE) || (player == TYPE.WATER && enemy == TYPE.GRASS)) {
-            trainer.removeHealth(1);
+
+            double damage = (double) 1 / level;
+
+            if (Math.random() <= .1) {
+                damage = damage * 3;
+                textBoxLabel.setText("Your opponent landed a critical hit and dealt extra damage!");
+            } else {
+                textBoxLabel.setText("You played " + player + ", while your opponent played " + enemy + ". You took damage.");
+            }
+
+            trainer.removeHealth((double) 1 / level);
             friendlyPokemon.startHurtAnimation();
             changePlayerHealth(trainer.getHealth());
             if (trainer.getHealth() <= 0) {
                 friendlyTrainerLost.play();
+                level++;
             }
+        } else {
+            textBoxLabel.setText("Draw! Both you and your opponent played " + player + ".");
         }
     }
 
@@ -239,7 +268,7 @@ public class BattleController {
 
     public void generateEnemyTrainerLost() {
         enemyTrainerLost.setNode(topPane);
-        enemyTrainerLost.setDuration(new Duration(750));
+        enemyTrainerLost.setDuration(new Duration(500));
         enemyTrainerLost.setFromValue(1);
         enemyTrainerLost.setToValue(0);
         enemyTrainerLost.setCycleCount(1);
@@ -270,7 +299,7 @@ public class BattleController {
         friendlyTrainerLost.setNode(topPane);
         friendlyTrainerLost.setDuration(new Duration(750));
         friendlyTrainerLost.setFromValue(1);
-        friendlyTrainerLost.setToValue(0);
+        friendlyTrainerLost.setToValue(1);
         friendlyTrainerLost.setCycleCount(1);
         friendlyTrainerLost.setAutoReverse(false);
         friendlyTrainerLost.setDelay(Duration.millis(1000));
@@ -278,7 +307,17 @@ public class BattleController {
         friendlyTrainerLost.setOnFinished(e -> {
             JOptionPane.showMessageDialog(null, "You blacked out");
             SceneLibrary.startMenu();
+            trainer.reset();
+            enemyTrainer.reset();
+            changePlayerHealth(trainer.getHealth());
+            changeEnemyHealth(trainer.getHealth());
+            level = 1;
+            textBoxLabel.setText("");
         });
+    }
+
+    public void goToMenu() {
+        SceneLibrary.startMenu();
     }
 
 }
