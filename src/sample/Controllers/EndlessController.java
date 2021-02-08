@@ -108,15 +108,7 @@ public class EndlessController {
     @FXML
     public void initialize() {
 
-        chargedAttackBar.setStyle("-fx-accent: orange;");
-        chargedValue.setValue(0);
-        chargedValue.addListener(new ChangeListener<Object>() {
-
-            @Override
-            public void changed(ObservableValue<?> observable, Object oldValue, Object newValue) {
-                chargedAttackBar.progressProperty().bind(chargedValue);
-            }
-        });
+        generateProgressBar();
 
         enemyLevel.setText("" + level);
         playerLevel.setText("" + Player.getLevel());
@@ -133,32 +125,7 @@ public class EndlessController {
         changePlayerHealth(trainer.getHealth());
         changeEnemyHealth(enemyTrainer.getHealth());
 
-        //ANIMATIONS
-
-        showPokemon.setOnFinished(e -> {
-            friendlyPokemon.setVisible(true);
-            enemyPokemon.setVisible(true);
-        });
-
-        despawnPokemon.getChildren().addAll(friendlyPokemon.getDespawnTransition(), enemyPokemon.getDespawnTransition());
-        spawnPokemon.getChildren().addAll(friendlyPokemon.getSpawnTransition(), enemyPokemon.getSpawnTransition());
-        attack.getChildren().addAll(friendlyPokemon.getAttackAnimation(), enemyPokemon.getAttackAnimation());
-
-        battle.getChildren().addAll(trainer.getStartTimer(), showPokemon, spawnPokemon, attack, checkDamage, despawnPokemon);
-
-        battle.setOnFinished(e -> {
-            fightButton.setVisible(true);
-            runButton.setVisible(true);
-            bagButton.setVisible(true);
-            shopButton.setVisible(true);
-            chargedAttackBar.setVisible(true);
-            chargeAttackButton.setVisible(true);
-        });
-
-        checkDamage.setOnFinished(e -> {
-            checkWin(friendlyPokemon.getType(), enemyPokemon.getType());
-            checkLost();
-        });
+        generateAnimations();
 
         generateEnemyTrainerLost();
         generateEnemyTrainerRespawn();
@@ -371,6 +338,45 @@ public class EndlessController {
         enemyHealth = new Rectangle(26, 47, amount, 2);
         enemyHealth.setFill(color);
         topPane.getChildren().add(enemyHealth);
+    }
+
+    public void generateAnimations() {
+        showPokemon.setOnFinished(e -> {
+            friendlyPokemon.setVisible(true);
+            enemyPokemon.setVisible(true);
+        });
+
+        despawnPokemon.getChildren().addAll(friendlyPokemon.getDespawnTransition(), enemyPokemon.getDespawnTransition());
+        spawnPokemon.getChildren().addAll(friendlyPokemon.getSpawnTransition(), enemyPokemon.getSpawnTransition());
+        attack.getChildren().addAll(friendlyPokemon.getAttackAnimation(), enemyPokemon.getAttackAnimation());
+
+        battle.getChildren().addAll(trainer.getStartTimer(), showPokemon, spawnPokemon, attack, checkDamage, despawnPokemon);
+
+        battle.setOnFinished(e -> {
+            fightButton.setVisible(true);
+            runButton.setVisible(true);
+            bagButton.setVisible(true);
+            shopButton.setVisible(true);
+            chargedAttackBar.setVisible(true);
+            chargeAttackButton.setVisible(true);
+        });
+
+        checkDamage.setOnFinished(e -> {
+            checkWin(friendlyPokemon.getType(), enemyPokemon.getType());
+            checkLost();
+        });
+    }
+
+    public void generateProgressBar() {
+        chargedAttackBar.setStyle("-fx-accent: orange;");
+        chargedValue.setValue(0);
+        chargedValue.addListener(new ChangeListener<Object>() {
+
+            @Override
+            public void changed(ObservableValue<?> observable, Object oldValue, Object newValue) {
+                chargedAttackBar.progressProperty().bind(chargedValue);
+            }
+        });
     }
 
     public void generateEnemyTrainerLost() {

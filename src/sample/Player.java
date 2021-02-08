@@ -1,5 +1,6 @@
 package sample;
 
+import sample.Selectors.ITEM;
 import sample.Selectors.LOCATION;
 import sample.Selectors.TYPE;
 
@@ -7,7 +8,9 @@ public abstract class Player {
 
     private static int money = 0;
     private static int level = 5;
+
     private static LOCATION location;
+    private static ITEM selectedItem;
 
     private static boolean hasChoiceBand = true;
     private static boolean hasAmuletCoin = false;
@@ -86,6 +89,10 @@ public abstract class Player {
         return grassPlates;
     }
 
+    public static ITEM getSelectedItem() {
+        return selectedItem;
+    }
+
     public static void addMoney(int money) {
         Player.money += money;
     }
@@ -115,6 +122,10 @@ public abstract class Player {
             }
         }
 
+    }
+
+    public static void setSelectedItem(ITEM selectedItem) {
+        Player.selectedItem = selectedItem;
     }
 
     public static void setLocation(LOCATION location) {
