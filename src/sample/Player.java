@@ -1,16 +1,19 @@
 package sample;
 
-import sample.Selectors.ITEM;
-import sample.Selectors.LOCATION;
-import sample.Selectors.TRAINER;
-import sample.Selectors.TYPE;
+import sample.Selectors.*;
+
+import javax.swing.*;
 
 public abstract class Player {
 
     private static int money = 0;
-    private static int level = 5;
+    private static int level = 15;
 
     private static TRAINER trainerSprite = TRAINER.FEMALE_TRAINER_THREE;
+
+    private static POKEMON fireSprite = POKEMON.CHARMANDER;
+    private static POKEMON waterSprite = POKEMON.SQUIRTLE;
+    private static POKEMON grassSprite = POKEMON.BULBOSAUR;
 
     private static LOCATION location;
     private static ITEM selectedItem;
@@ -55,6 +58,18 @@ public abstract class Player {
 
     public static TRAINER getTrainerSprite() {
         return trainerSprite;
+    }
+
+    public static POKEMON getFireSprite() {
+        return fireSprite;
+    }
+
+    public static POKEMON getWaterSprite() {
+        return waterSprite;
+    }
+
+    public static POKEMON getGrassSprite() {
+        return grassSprite;
     }
 
     public static boolean isHasUsedItem() {
@@ -126,14 +141,21 @@ public abstract class Player {
         for (int i = 0; i < numLevels; i++) {
             level++;
             if (level == 16) {
-                //EVOLVE FIRST STAGE
+                evolvePokemon();
             }
 
             if (level == 32) {
-                //EVOLVE SECOND STAGE
+                evolvePokemon();
             }
         }
 
+    }
+
+    public static void evolvePokemon() {
+        fireSprite = fireSprite.getEvolution();
+        waterSprite = waterSprite.getEvolution();
+        grassSprite = grassSprite.getEvolution();
+        JOptionPane.showMessageDialog(null, "Your pokemon have evolved!- ");
     }
 
     public static void setTrainerSprite(TRAINER trainerSprite) {

@@ -169,7 +169,7 @@ public class EndlessController {
             chargedAttackBar.setVisible(false);
             chargeAttackButton.setVisible(false);
 
-            friendlyPokemon.setPokemon(trainer.getFirePokemon());
+            friendlyPokemon.setPokemon(Player.getFireSprite());
             enemyPokemon.setPokemon(enemyTrainer.getRandomPokemon());
 
             checkPotion();
@@ -186,7 +186,7 @@ public class EndlessController {
             chargedAttackBar.setVisible(false);
             chargeAttackButton.setVisible(false);
 
-            friendlyPokemon.setPokemon(trainer.getWaterPokemon());
+            friendlyPokemon.setPokemon(Player.getWaterSprite());
             enemyPokemon.setPokemon(enemyTrainer.getRandomPokemon());
 
             checkPotion();
@@ -203,7 +203,7 @@ public class EndlessController {
             chargedAttackBar.setVisible(false);
             chargeAttackButton.setVisible(false);
 
-            friendlyPokemon.setPokemon(trainer.getGrassPokemon());
+            friendlyPokemon.setPokemon(Player.getGrassSprite());
             enemyPokemon.setPokemon(enemyTrainer.getRandomPokemon());
 
             checkPotion();
