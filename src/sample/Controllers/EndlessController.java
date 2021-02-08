@@ -115,7 +115,7 @@ public class EndlessController {
         playerLevel.setText("" + Player.getLevel());
 
         trainer = new Trainer(Player.getTrainerSprite(), false);
-        enemyTrainer = new Trainer(TRAINER.FEMALE_TRAINER_TWO, true);
+        enemyTrainer = new Trainer(TRAINER.getRandomTrainer(), true);
 
         friendlyPokemon = new Pokemon(POKEMON.BULBOSAUR, false);
         enemyPokemon = new Pokemon(POKEMON.BULBOSAUR, true);

@@ -2,6 +2,7 @@ package sample.Selectors;
 
 import javafx.scene.image.Image;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -13,11 +14,69 @@ public enum TRAINER {
 
     FEMALE_TRAINER_ONE("resources/images/trainers/player/femaleTrainer/femaleTrainerOne.png", "resources/images/trainers/player/femaleTrainer/femaleTrainerTwo.png", "resources/images/trainers/player/femaleTrainer/femaleTrainerThree.png", "resources/images/trainers/player/femaleTrainer/femaleTrainerFour.png", "resources/images/trainers/player/femaleTrainer/femaleTrainerFive.png", "resources/images/trainers/player/femaleTrainer/femaleTrainerSix.png", "resources/images/trainers/player/femaleTrainer/femaleTrainerSeven.png", "resources/images/trainers/player/femaleTrainer/femaleTrainerEight.png", "resources/images/trainers/enemy/femaleTrainer.png"),
     FEMALE_TRAINER_TWO("resources/images/trainers/player/femaleTrainerTwo/femaleTrainerOne.png", "resources/images/trainers/player/femaleTrainerTwo/femaleTrainerTwo.png", "resources/images/trainers/player/femaleTrainerTwo/femaleTrainerThree.png", "resources/images/trainers/player/femaleTrainerTwo/femaleTrainerFour.png", "resources/images/trainers/player/femaleTrainerTwo/femaleTrainerFive.png", "resources/images/trainers/player/femaleTrainerTwo/femaleTrainerSix.png", "resources/images/trainers/player/femaleTrainerTwo/femaleTrainerSeven.png", "resources/images/trainers/player/femaleTrainerTwo/femaleTrainerEight.png", "resources/images/trainers/enemy/femaleTrainerTwo.png"),
-    FEMALE_TRAINER_THREE("resources/images/trainers/player/femaleTrainerThree/femaleTrainerOne.png", "resources/images/trainers/player/femaleTrainerThree/femaleTrainerTwo.png", "resources/images/trainers/player/femaleTrainerThree/femaleTrainerThree.png", "resources/images/trainers/player/femaleTrainerThree/femaleTrainerFour.png", "resources/images/trainers/player/femaleTrainerThree/femaleTrainerFive.png", "resources/images/trainers/player/femaleTrainerThree/femaleTrainerSix.png", "resources/images/trainers/player/femaleTrainerThree/femaleTrainerSix.png", "resources/images/trainers/player/femaleTrainerThree/femaleTrainerSix.png", "resources/images/trainers/enemy/femaleTrainerThree.png");
+    FEMALE_TRAINER_THREE("resources/images/trainers/player/femaleTrainerThree/femaleTrainerOne.png", "resources/images/trainers/player/femaleTrainerThree/femaleTrainerTwo.png", "resources/images/trainers/player/femaleTrainerThree/femaleTrainerThree.png", "resources/images/trainers/player/femaleTrainerThree/femaleTrainerFour.png", "resources/images/trainers/player/femaleTrainerThree/femaleTrainerFive.png", "resources/images/trainers/player/femaleTrainerThree/femaleTrainerSix.png", "resources/images/trainers/player/femaleTrainerThree/femaleTrainerSix.png", "resources/images/trainers/player/femaleTrainerThree/femaleTrainerSix.png", "resources/images/trainers/enemy/femaleTrainerThree.png"),
+
+    ARCHITECT("resources/images/trainers/enemy/architect.png"),
+    BIMBO("resources/images/trainers/enemy/bimbo.png"),
+    BIRD_CATCHER("resources/images/trainers/enemy/birdCatcher.png"),
+    BOY("resources/images/trainers/enemy/boy.png"),
+    BUG_CATCHER("resources/images/trainers/enemy/bugcatcher.png"),
+    CRAZY_LADY("resources/images/trainers/enemy/crazyLady.png"),
+    DANCERS("resources/images/trainers/enemy/dancers.png"),
+    DINOSAUR("resources/images/trainers/enemy/dinosaur.png"),
+    DRAGON_TRAINER_MALE("resources/images/trainers/enemy/dragonTrainerMale.png"),
+    DRAGON_TRAINER_FEMALE("resources/images/trainers/enemy/dragonTrainerFemale.png"),
+    FIRE_MAN("resources/images/trainers/enemy/fireMan.png"),
+    KARATE("resources/images/trainers/enemy/karate.png"),
+    KYOSHI("resources/images/trainers/enemy/kyoshi.png"),
+    MAGICIAN("resources/images/trainers/enemy/magician.png"),
+    MONK("resources/images/trainers/enemy/monk.png"),
+    OLD_MAN("resources/images/trainers/enemy/oldMan.png"),
+    RICH_MAN("resources/images/trainers/enemy/richMan.png"),
+    ROBOT_MAN("resources/images/trainers/enemy/robotMan.png"),
+    ROCKET_FEMALE("resources/images/trainers/enemy/rocketFemale.png"),
+    ROCKET_MALE("resources/images/trainers/enemy/rocketMale.png"),
+    SCHOOL_GIRL("resources/images/trainers/enemy/schoolGirl.png"),
+    SCIENTIST("resources/images/trainers/enemy/scientist.png"),
+    SWIMMER_FEMALE("resources/images/trainers/enemy/swimmerFemale.png"),
+    SWIMMER_MALE("resources/images/trainers/enemy/swimmerMale.png"),
+    TWINS("resources/images/trainers/enemy/twins.png");
 
     private final Image frontImage;
     private final ArrayList<Image> frames = new ArrayList<Image>();
-    private static final TRAINER[] trainers = {MALE_TRAINER_ONE, FEMALE_TRAINER_ONE};
+    private static final TRAINER[] trainers = {
+            MALE_TRAINER_ONE,
+            MALE_TRAINER_TWO,
+            MALE_TRAINER_THREE,
+            FEMALE_TRAINER_ONE,
+            FEMALE_TRAINER_TWO,
+            FEMALE_TRAINER_THREE,
+            ARCHITECT,
+            BIMBO,
+            BIRD_CATCHER,
+            BOY,
+            BUG_CATCHER,
+            CRAZY_LADY,
+            DANCERS,
+            DINOSAUR,
+            DRAGON_TRAINER_MALE,
+            DRAGON_TRAINER_FEMALE,
+            FIRE_MAN,
+            KARATE,
+            KYOSHI,
+            MAGICIAN,
+            MONK,
+            OLD_MAN,
+            RICH_MAN,
+            ROBOT_MAN,
+            ROCKET_FEMALE,
+            ROCKET_MALE,
+            SCHOOL_GIRL,
+            SCIENTIST,
+            SWIMMER_FEMALE,
+            SWIMMER_MALE,
+            TWINS
+    };
 
 
     TRAINER(String frameOne, String frameTwo, String frameThree, String frameFour, String frameFive, String frameSix, String frameSeven, String frameEight, String imagePath) {
