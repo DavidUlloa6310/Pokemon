@@ -20,7 +20,7 @@ public class Main extends Application {
         SceneLibrary.setEndlessRoot(endlessRoot);
         SceneLibrary.setStoreScene(storeRoot);
 
-        SceneLibrary.startStore();
+        SceneLibrary.startMenu();
         primaryStage.show();
     }
 

@@ -2,12 +2,17 @@ package sample.Controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.SplitPane;
 import javafx.scene.image.ImageView;
 import sample.Player;
 import sample.SceneLibrary;
 import sample.Selectors.LOCATION;
 
 public class StoreController {
+
+    @FXML
+    SplitPane splitPane;
+
     @FXML
     ImageView hyperPotionButton;
 
@@ -48,6 +53,7 @@ public class StoreController {
     public void initialize() {
         moneyLabel.setText("Your money " + Player.getMoney());
         boxLabel.setText("Hover over item to see information.");
+        splitPane.hoverProperty().addListener(e -> updateMoney());
 
         hyperPotionButton.hoverProperty().addListener(e -> displayPotionInfo());
         waterPlateButton.hoverProperty().addListener(e -> displayWaterPlateInfo());
@@ -69,6 +75,10 @@ public class StoreController {
             SceneLibrary.startEndless();
         else if (Player.getLocation() == LOCATION.TUTORIAL);
             //START TUTORIAL. MUST DO!!!
+    }
+
+    public void updateMoney() {
+        moneyLabel.setText("Your money " + Player.getMoney());
     }
 
     public void buyPotion() {
@@ -194,7 +204,7 @@ public class StoreController {
     }
 
     public void displayChoiceBandInfo() {
-        boxLabel.setText("Makes critical hits more likely and reduces required charges for charged attack from 5 to 3.");
+        boxLabel.setText("Makes critical hits more likely and reduces required charges for charged attack from 5 to 2.");
     }
 
 

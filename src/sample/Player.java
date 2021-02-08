@@ -9,11 +9,11 @@ public abstract class Player {
     private static int level = 5;
     private static LOCATION location;
 
-    private static boolean hasChoiceBand = false;
+    private static boolean hasChoiceBand = true;
     private static boolean hasAmuletCoin = false;
-    private static boolean hasXPShare = false;
+    private static boolean hasXPShare = true;
 
-    private static boolean hasCharcoal = false;
+    private static boolean hasCharcoal = true;
     private static boolean hasMysticWater = false;
     private static boolean hasMiracleSeed = false;
 
@@ -92,6 +92,29 @@ public abstract class Player {
 
     public static void removeMoney(int money) {
         Player.money -= money;
+    }
+
+    public static void increaseLevel() {
+
+        int numLevels;
+
+        if (hasXPShare) {
+            numLevels = 4;
+        } else {
+            numLevels = 2;
+        }
+
+        for (int i = 0; i < numLevels; i++) {
+            level++;
+            if (level == 16) {
+                //EVOLVE FIRST STAGE
+            }
+
+            if (level == 32) {
+                //EVOLVE SECOND STAGE
+            }
+        }
+
     }
 
     public static void setLocation(LOCATION location) {

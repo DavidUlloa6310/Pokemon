@@ -21,23 +21,23 @@ public abstract class SceneLibrary {
     }
 
     public static void setMenuRoot(Parent root) {
-        menuScene = new Scene(root, 245, 384);
+        menuScene = new Scene(root, 250, 384);
     }
 
     public static void setEndlessRoot(Parent root) {
-        endlessScene = new Scene(root, 245, 384);
+        endlessScene = new Scene(root, 250, 384);
     }
 
     public static void setCampaignRoot(Parent root) {
-        campaignScene = new Scene(root, 245, 384);
+        campaignScene = new Scene(root, 250, 384);
     }
 
     public static void setStoreScene(Parent root) {
-        storeScene = new Scene(root, 245, 384);
+        storeScene = new Scene(root, 250, 384);
     }
 
     public static void setBagScene(Parent root) {
-        bagScene = new Scene(root, 245, 384);
+        bagScene = new Scene(root, 250, 384);
     }
 
     public static void startEndless() {

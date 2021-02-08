@@ -4,9 +4,14 @@ import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -26,7 +31,7 @@ public class EndlessController {
 
     private final Group layout = new Group();
 
-    private int level = 1;
+    private int level = 2;
     private boolean usedSpecial = false;
 
     private Pokemon friendlyPokemon;
@@ -57,10 +62,24 @@ public class EndlessController {
     private Pane topPane;
 
     @FXML
+    private ProgressBar chargedAttackBar;
+    private final DoubleProperty chargedValue = new SimpleDoubleProperty();
+    private boolean hasChargedAttack = false;
+
+    @FXML
     private ImageView fightButton;
 
     @FXML
+    private ImageView chargeAttackButton;
+
+    @FXML
     private ImageView runButton;
+
+    @FXML
+    private ImageView shopButton;
+
+    @FXML
+    private ImageView bagButton;
 
     @FXML
     private ImageView fireButton;
@@ -81,7 +100,26 @@ public class EndlessController {
     private ImageView enemyHealthBar;
 
     @FXML
+    private Label enemyLevel;
+
+    @FXML
+    private Label playerLevel;
+
+    @FXML
     public void initialize() {
+
+        chargedAttackBar.setStyle("-fx-accent: orange;");
+        chargedValue.setValue(0);
+        chargedValue.addListener(new ChangeListener<Object>() {
+
+            @Override
+            public void changed(ObservableValue<?> observable, Object oldValue, Object newValue) {
+                chargedAttackBar.progressProperty().bind(chargedValue);
+            }
+        });
+
+        enemyLevel.setText("" + level);
+        playerLevel.setText("" + Player.getLevel());
 
         trainer = new Trainer(TRAINER.MALE_TRAINER, false);
         enemyTrainer = new Trainer(TRAINER.FEMALE_TRAINER, true);
@@ -111,6 +149,10 @@ public class EndlessController {
         battle.setOnFinished(e -> {
             fightButton.setVisible(true);
             runButton.setVisible(true);
+            bagButton.setVisible(true);
+            shopButton.setVisible(true);
+            chargedAttackBar.setVisible(true);
+            chargeAttackButton.setVisible(true);
         });
 
         checkDamage.setOnFinished(e -> {
@@ -127,9 +169,23 @@ public class EndlessController {
         if (fightButton.isVisible()) {
             fightButton.setVisible(false);
             runButton.setVisible(false);
+            bagButton.setVisible(false);
+            shopButton.setVisible(false);
+
             fireButton.setVisible(true);
             waterButton.setVisible(true);
             grassButton.setVisible(true);
+        }
+    }
+
+    public void chargeAttack() {
+        if (chargedValue.get() >= 1) {
+            hasChargedAttack = true;
+            chargedAttackBar.setVisible(false);
+            chargeAttackButton.setVisible(false);
+            chargedValue.set(0);
+
+            fight();
         }
     }
 
@@ -138,6 +194,8 @@ public class EndlessController {
             fireButton.setVisible(false);
             waterButton.setVisible(false);
             grassButton.setVisible(false);
+            chargedAttackBar.setVisible(false);
+            chargeAttackButton.setVisible(false);
 
             friendlyPokemon.setPokemon(trainer.getFirePokemon());
             enemyPokemon.setPokemon(enemyTrainer.getRandomPokemon());
@@ -152,6 +210,8 @@ public class EndlessController {
             fireButton.setVisible(false);
             waterButton.setVisible(false);
             grassButton.setVisible(false);
+            chargedAttackBar.setVisible(false);
+            chargeAttackButton.setVisible(false);
 
             friendlyPokemon.setPokemon(trainer.getWaterPokemon());
             enemyPokemon.setPokemon(enemyTrainer.getRandomPokemon());
@@ -166,6 +226,8 @@ public class EndlessController {
             fireButton.setVisible(false);
             waterButton.setVisible(false);
             grassButton.setVisible(false);
+            chargedAttackBar.setVisible(false);
+            chargeAttackButton.setVisible(false);
 
             friendlyPokemon.setPokemon(trainer.getGrassPokemon());
             enemyPokemon.setPokemon(enemyTrainer.getRandomPokemon());
@@ -179,40 +241,61 @@ public class EndlessController {
 
         if ((player == TYPE.FIRE && enemy == TYPE.GRASS) || (player == TYPE.WATER && enemy == TYPE.FIRE) || (player == TYPE.GRASS && enemy == TYPE.WATER)) {
 
-            double damage =  Player.calculateDamage(level, player);
-
-            double critChance = .1;
-            if (Player.isHasChoiceBand())
-                critChance *= 2;
-
-            if (Math.random() <= critChance) {
-                damage = damage * 2;
-                textBoxLabel.setText("You landed a critical hit and dealt extra damage!");
-            } else {
-                textBoxLabel.setText("You played " + player + ", while your opponent played " + enemy + ". You dealt damage.");
-            }
-
-            enemyTrainer.removeHealth(damage);
-            enemyPokemon.startHurtAnimation();
-            changeEnemyHealth(enemyTrainer.getHealth());
+           playerWin(player, enemy);
 
         } else if ((player == TYPE.FIRE && enemy == TYPE.WATER) || (player == TYPE.GRASS && enemy == TYPE.FIRE) || (player == TYPE.WATER && enemy == TYPE.GRASS)) {
 
-            double damage = (double) 1 / level;
+            enemyWin(player, enemy);
 
-            if (Math.random() <= .1) {
-                damage = damage * 3;
-                textBoxLabel.setText("Your opponent landed a critical hit and dealt extra damage!");
-            } else {
-                textBoxLabel.setText("You played " + player + ", while your opponent played " + enemy + ". You took damage.");
-            }
-
-            trainer.removeHealth((double) 1 / level);
-            friendlyPokemon.startHurtAnimation();
-            changePlayerHealth(trainer.getHealth());
         } else {
             textBoxLabel.setText("Draw! Both you and your opponent played " + player + ".");
         }
+    }
+
+    public void playerWin(TYPE player, TYPE enemy) {
+        double damage =  Player.calculateDamage(level, player);
+
+        double critChance = .1;
+        if (Player.isHasChoiceBand())
+            critChance *= 2;
+
+        if (Math.random() <= critChance) {
+            damage = damage * 2;
+            textBoxLabel.setText("You landed a critical hit and dealt extra damage!");
+        } else {
+            textBoxLabel.setText("You played " + player + ", while your opponent played " + enemy + ". You dealt damage.");
+        }
+
+        if (hasChargedAttack) {
+            damage *= 3;
+            hasChargedAttack = false;
+        }
+
+        enemyTrainer.removeHealth(damage);
+        enemyPokemon.startHurtAnimation();
+        changeEnemyHealth(enemyTrainer.getHealth());
+    }
+
+    public void enemyWin(TYPE player, TYPE enemy) {
+        double damage = (double) 1 / level;
+
+        if (Math.random() <= .1) {
+            damage = damage * 2;
+            textBoxLabel.setText("Your opponent landed a critical hit and dealt extra damage!");
+        } else {
+            textBoxLabel.setText("You played " + player + ", while your opponent played " + enemy + ". You took damage.");
+        }
+
+        trainer.removeHealth(damage);
+
+        if (Player.isHasChoiceBand())
+            chargedValue.set(chargedValue.get() + .5);
+        else
+            chargedValue.set(chargedValue.get() + .2);
+
+        hasChargedAttack = false;
+        friendlyPokemon.startHurtAnimation();
+        changePlayerHealth(trainer.getHealth());
     }
 
     private void checkLost() {
@@ -222,13 +305,22 @@ public class EndlessController {
             textBoxLabel.setText("You have defeated the enemy trainer!\nEarned " + cash + " cash");
             enemyTrainer.startDespawnTimer();
             resetEnemy.play();
+
             level++;
+            Player.increaseLevel();
+
+            enemyLevel.setText("" + level);
+            playerLevel.setText("" + Player.getLevel());
+
             return;
         }
 
         if (trainer.getHealth() <= 0) {
             friendlyTrainerLost.play();
-            level++;
+
+            level = 1;
+            enemyLevel.setText("" + level);
+            chargedValue.set(0);
         }
 
     }
@@ -333,6 +425,10 @@ public class EndlessController {
 
     public void goToMenu() {
         SceneLibrary.startMenu();
+    }
+
+    public void goToShop() {
+        SceneLibrary.startStore();
     }
 
 }

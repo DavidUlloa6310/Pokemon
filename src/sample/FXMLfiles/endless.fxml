@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -90,14 +91,20 @@
                         <Image url="@../../resources/images/buttons/waterButton.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="36.0" fitWidth="69.0" layoutX="14.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="bagButton" fitHeight="36.0" fitWidth="69.0" layoutX="14.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../resources/images/buttons/bagButton.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="36.0" fitWidth="60.0" layoutX="187.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="shopButton" fitHeight="36.0" fitWidth="60.0" layoutX="187.0" layoutY="160.0" onMouseClicked="#goToShop" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../resources/images/buttons/storeButton.png" />
+                     </image>
+                  </ImageView>
+                  <ProgressBar fx:id="chargedAttackBar" layoutX="7.0" layoutY="14.0" prefHeight="18.0" prefWidth="193.0" progress="0.0" />
+                  <ImageView fx:id="chargeAttackButton" fitHeight="18.0" fitWidth="113.0" layoutX="207.0" layoutY="13.0" onMouseClicked="#chargeAttack" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/images/buttons/chargeAttackButton.png" />
                      </image>
                   </ImageView>
                </children>
