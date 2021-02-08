@@ -1,4 +1,8 @@
-package sample;
+package sample.Controllers;
+
+import sample.Player;
+import sample.SceneLibrary;
+import sample.Selectors.LOCATION;
 
 public class MenuController {
     public void playEndless() {

@@ -1,4 +1,4 @@
-package sample;
+package sample.Controllers;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
@@ -12,9 +12,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import sample.Point;
+import sample.Pokemon;
+import sample.SceneLibrary;
 import sample.Selectors.POKEMON;
 import sample.Selectors.TRAINER;
 import sample.Selectors.TYPE;
+import sample.Trainer;
 
 import javax.swing.*;
 

@@ -12,13 +12,15 @@ public class Main extends Application {
         Parent menuRoot = FXMLLoader.load(getClass().getResource("FXMLfiles/menu.fxml"));
         Parent endlessRoot = FXMLLoader.load(getClass().getResource("FXMLfiles/endless.fxml"));
         Parent campaignRoot = FXMLLoader.load(getClass().getResource("FXMLfiles/campaign.fxml"));
+        Parent storeRoot = FXMLLoader.load(getClass().getResource("FXMLfiles/store.fxml"));
 
         SceneLibrary.setPrimaryStage(primaryStage);
         SceneLibrary.setMenuRoot(menuRoot);
         SceneLibrary.setCampaignRoot(campaignRoot);
         SceneLibrary.setEndlessRoot(endlessRoot);
+        SceneLibrary.setStoreScene(storeRoot);
 
-        SceneLibrary.startMenu();
+        SceneLibrary.startStore();
         primaryStage.show();
     }
 

@@ -1,4 +1,4 @@
-package sample;
+package sample.Controllers;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
@@ -12,9 +12,13 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import sample.Player;
+import sample.Pokemon;
+import sample.SceneLibrary;
 import sample.Selectors.POKEMON;
 import sample.Selectors.TRAINER;
 import sample.Selectors.TYPE;
+import sample.Trainer;
 
 import javax.swing.*;
 
@@ -23,6 +27,7 @@ public class EndlessController {
     private final Group layout = new Group();
 
     private int level = 1;
+    private boolean usedSpecial = false;
 
     private Pokemon friendlyPokemon;
     private Pokemon enemyPokemon;
@@ -110,6 +115,7 @@ public class EndlessController {
 
         checkDamage.setOnFinished(e -> {
             checkWin(friendlyPokemon.getType(), enemyPokemon.getType());
+            checkLost();
         });
 
         generateEnemyTrainerLost();
@@ -171,30 +177,25 @@ public class EndlessController {
 
     public void checkWin(TYPE player, TYPE enemy) {
 
-        String message = "";
-
         if ((player == TYPE.FIRE && enemy == TYPE.GRASS) || (player == TYPE.WATER && enemy == TYPE.FIRE) || (player == TYPE.GRASS && enemy == TYPE.WATER)) {
 
-            double damage = (double) 1 / level;
+            double damage =  Player.calculateDamage(level, player);
 
-            if (Math.random() <= .1) {
-                damage = damage * 3;
+            double critChance = .1;
+            if (Player.isHasChoiceBand())
+                critChance *= 2;
+
+            if (Math.random() <= critChance) {
+                damage = damage * 2;
                 textBoxLabel.setText("You landed a critical hit and dealt extra damage!");
             } else {
                 textBoxLabel.setText("You played " + player + ", while your opponent played " + enemy + ". You dealt damage.");
             }
 
-            enemyTrainer.removeHealth((double) 1/ level);
+            enemyTrainer.removeHealth(damage);
             enemyPokemon.startHurtAnimation();
             changeEnemyHealth(enemyTrainer.getHealth());
 
-
-            if (enemyTrainer.getHealth() <= 0) {
-                textBoxLabel.setText("You have defeated the enemy trainer!");
-                enemyTrainer.startDespawnTimer();
-                resetEnemy.play();
-                level++;
-            }
         } else if ((player == TYPE.FIRE && enemy == TYPE.WATER) || (player == TYPE.GRASS && enemy == TYPE.FIRE) || (player == TYPE.WATER && enemy == TYPE.GRASS)) {
 
             double damage = (double) 1 / level;
@@ -209,13 +210,27 @@ public class EndlessController {
             trainer.removeHealth((double) 1 / level);
             friendlyPokemon.startHurtAnimation();
             changePlayerHealth(trainer.getHealth());
-            if (trainer.getHealth() <= 0) {
-                friendlyTrainerLost.play();
-                level++;
-            }
         } else {
             textBoxLabel.setText("Draw! Both you and your opponent played " + player + ".");
         }
+    }
+
+    private void checkLost() {
+        if (enemyTrainer.getHealth() <= 0) {
+            int cash = enemyTrainer.generateCash(level);
+            Player.addMoney(cash);
+            textBoxLabel.setText("You have defeated the enemy trainer!\nEarned " + cash + " cash");
+            enemyTrainer.startDespawnTimer();
+            resetEnemy.play();
+            level++;
+            return;
+        }
+
+        if (trainer.getHealth() <= 0) {
+            friendlyTrainerLost.play();
+            level++;
+        }
+
     }
 
     public void changePlayerHealth(double amountPercent) {

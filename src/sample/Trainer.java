@@ -65,9 +65,19 @@ public class Trainer extends ImageView {
     }
 
     public void removeHealth(double health) {
-        if (health > 1 || health < 0)
+        if (health < 0)
             return;
+        if (health > 1)
+            health = 1;
         this.health = this.health - health;
+    }
+
+    public int generateCash(int level) {
+        int cash = random.nextInt(50);
+        if (level > 5) {
+            cash *= 3;
+        }
+        return cash;
     }
 
     private void generateStartTimer() {

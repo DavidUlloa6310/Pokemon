@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.5" orientation="VERTICAL" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.EndlessController">
+<SplitPane dividerPositions="0.5" orientation="VERTICAL" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.EndlessController">
   <items>
     <AnchorPane>
          <children>
@@ -88,6 +88,16 @@
                   <ImageView fx:id="waterButton" fitHeight="58.0" fitWidth="95.0" layoutX="81.0" layoutY="96.0" onMouseClicked="#waterClick" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@../../resources/images/buttons/waterButton.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="36.0" fitWidth="69.0" layoutX="14.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/images/buttons/bagButton.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="36.0" fitWidth="60.0" layoutX="187.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/images/buttons/storeButton.png" />
                      </image>
                   </ImageView>
                </children>
