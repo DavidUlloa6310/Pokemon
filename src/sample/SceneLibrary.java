@@ -61,4 +61,13 @@ public abstract class SceneLibrary {
     public static void startBag() {
         primaryStage.setScene(bagScene);
     }
+
+    public static void goBack() {
+        if (Player.getLocation() == LOCATION.CAMPAIGN)
+            SceneLibrary.startCampaign();
+        else if (Player.getLocation() == LOCATION.ENDLESS)
+            SceneLibrary.startEndless();
+        else if (Player.getLocation() == LOCATION.TUTORIAL);
+            //GO TO TUTORIAL
+    }
 }

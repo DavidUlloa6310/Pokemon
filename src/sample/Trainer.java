@@ -6,6 +6,7 @@ import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
+import sample.Selectors.ITEM;
 import sample.Selectors.POKEMON;
 import sample.Selectors.TRAINER;
 
@@ -53,6 +54,29 @@ public class Trainer extends ImageView {
 
     public POKEMON getRandomPokemon() {
         int randomNum = random.nextInt(3);
+
+        if (Player.getSelectedItem() == ITEM.FIREPLATE) {
+            while(randomNum == 0) {
+                randomNum = random.nextInt(3);
+            }
+            Player.setSelectedItem(null);
+        }
+
+        if (Player.getSelectedItem() == ITEM.WATERPLATE) {
+            while(randomNum == 2) {
+                randomNum = random.nextInt(3);
+            }
+            Player.setSelectedItem(null);
+        }
+
+        if (Player.getSelectedItem() == ITEM.GRASSPLATE) {
+            while(randomNum == 1) {
+                randomNum = random.nextInt(3);
+            }
+            Player.setSelectedItem(null);
+        }
+
+
         POKEMON pokemon;
         switch (randomNum) {
             case 0:
@@ -72,11 +96,17 @@ public class Trainer extends ImageView {
         this.health = this.health - health;
     }
 
+    public void restoreHealth() {
+        this.health = 1;
+    }
+
     public int generateCash(int level) {
         int cash = random.nextInt(50);
         if (level > 5) {
             cash *= 3;
         }
+        if (Player.isHasAmuletCoin())
+            cash *= 2;
         return cash;
     }
 

@@ -20,6 +20,7 @@ import javafx.util.Duration;
 import sample.Player;
 import sample.Pokemon;
 import sample.SceneLibrary;
+import sample.Selectors.ITEM;
 import sample.Selectors.POKEMON;
 import sample.Selectors.TRAINER;
 import sample.Selectors.TYPE;
@@ -167,6 +168,7 @@ public class EndlessController {
             friendlyPokemon.setPokemon(trainer.getFirePokemon());
             enemyPokemon.setPokemon(enemyTrainer.getRandomPokemon());
 
+            checkPotion();
             textBoxLabel.setText("");
             battle.play();
         }
@@ -183,6 +185,7 @@ public class EndlessController {
             friendlyPokemon.setPokemon(trainer.getWaterPokemon());
             enemyPokemon.setPokemon(enemyTrainer.getRandomPokemon());
 
+            checkPotion();
             textBoxLabel.setText("");
             battle.play();
         }
@@ -199,6 +202,7 @@ public class EndlessController {
             friendlyPokemon.setPokemon(trainer.getGrassPokemon());
             enemyPokemon.setPokemon(enemyTrainer.getRandomPokemon());
 
+            checkPotion();
             textBoxLabel.setText("");
             battle.play();
         }
@@ -279,6 +283,8 @@ public class EndlessController {
             enemyLevel.setText("" + level);
             playerLevel.setText("" + Player.getLevel());
 
+            Player.setHasUsedItem(false);
+
             return;
         }
 
@@ -288,6 +294,7 @@ public class EndlessController {
             level = 1;
             enemyLevel.setText("" + level);
             chargedValue.set(0);
+            Player.setHasUsedItem(false);
         }
 
     }
@@ -429,12 +436,27 @@ public class EndlessController {
         });
     }
 
+    public void checkPotion() {
+        if (Player.getSelectedItem() == ITEM.POTION) {
+            trainer.restoreHealth();
+            changePlayerHealth(trainer.getHealth());
+            Player.setSelectedItem(null);
+        }
+    }
+
     public void goToMenu() {
         SceneLibrary.startMenu();
     }
 
     public void goToShop() {
         SceneLibrary.startStore();
+    }
+
+    public void goToBag() {
+        if (!Player.isHasUsedItem())
+            SceneLibrary.startBag();
+        else
+            JOptionPane.showMessageDialog(null, "You have already activated an item for this round.");
     }
 
 }

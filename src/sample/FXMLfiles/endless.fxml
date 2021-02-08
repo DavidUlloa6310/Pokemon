@@ -91,7 +91,7 @@
                         <Image url="@../../resources/images/buttons/waterButton.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="bagButton" fitHeight="36.0" fitWidth="69.0" layoutX="14.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="bagButton" fitHeight="36.0" fitWidth="69.0" layoutX="14.0" layoutY="160.0" onMouseClicked="#goToBag" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../resources/images/buttons/bagButton.png" />
                      </image>

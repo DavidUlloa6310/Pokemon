@@ -13,12 +13,14 @@ public class Main extends Application {
         Parent endlessRoot = FXMLLoader.load(getClass().getResource("FXMLfiles/endless.fxml"));
         Parent campaignRoot = FXMLLoader.load(getClass().getResource("FXMLfiles/campaign.fxml"));
         Parent storeRoot = FXMLLoader.load(getClass().getResource("FXMLfiles/store.fxml"));
+        Parent bagRoot = FXMLLoader.load(getClass().getResource("FXMLfiles/bag.fxml"));
 
         SceneLibrary.setPrimaryStage(primaryStage);
         SceneLibrary.setMenuRoot(menuRoot);
         SceneLibrary.setCampaignRoot(campaignRoot);
         SceneLibrary.setEndlessRoot(endlessRoot);
         SceneLibrary.setStoreScene(storeRoot);
+        SceneLibrary.setBagScene(bagRoot);
 
         SceneLibrary.startMenu();
         primaryStage.show();

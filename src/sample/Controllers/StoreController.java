@@ -69,12 +69,7 @@ public class StoreController {
     }
 
     public void backButton() {
-        if (Player.getLocation() == LOCATION.CAMPAIGN)
-            SceneLibrary.startCampaign();
-        else if (Player.getLocation() == LOCATION.ENDLESS)
-            SceneLibrary.startEndless();
-        else if (Player.getLocation() == LOCATION.TUTORIAL);
-            //START TUTORIAL. MUST DO!!!
+        SceneLibrary.goBack();
     }
 
     public void updateMoney() {

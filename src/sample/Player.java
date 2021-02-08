@@ -11,12 +11,13 @@ public abstract class Player {
 
     private static LOCATION location;
     private static ITEM selectedItem;
+    private static boolean hasUsedItem = false;
 
-    private static boolean hasChoiceBand = true;
+    private static boolean hasChoiceBand = false;
     private static boolean hasAmuletCoin = false;
-    private static boolean hasXPShare = true;
+    private static boolean hasXPShare = false;
 
-    private static boolean hasCharcoal = true;
+    private static boolean hasCharcoal = false;
     private static boolean hasMysticWater = false;
     private static boolean hasMiracleSeed = false;
 
@@ -47,6 +48,10 @@ public abstract class Player {
 
     public static LOCATION getLocation() {
         return location;
+    }
+
+    public static boolean isHasUsedItem() {
+        return hasUsedItem;
     }
 
     public static boolean isHasChoiceBand() {
@@ -130,6 +135,10 @@ public abstract class Player {
 
     public static void setLocation(LOCATION location) {
         Player.location = location;
+    }
+
+    public static void setHasUsedItem(boolean hasUsedItem) {
+        Player.hasUsedItem = hasUsedItem;
     }
 
     public static void setHasChoiceBand(boolean hasChoiceBand) {
