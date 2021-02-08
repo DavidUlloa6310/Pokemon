@@ -114,8 +114,8 @@ public class EndlessController {
         enemyLevel.setText("" + level);
         playerLevel.setText("" + Player.getLevel());
 
-        trainer = new Trainer(TRAINER.MALE_TRAINER, false);
-        enemyTrainer = new Trainer(TRAINER.FEMALE_TRAINER, true);
+        trainer = new Trainer(Player.getTrainerSprite(), false);
+        enemyTrainer = new Trainer(TRAINER.FEMALE_TRAINER_TWO, true);
 
         friendlyPokemon = new Pokemon(POKEMON.BULBOSAUR, false);
         enemyPokemon = new Pokemon(POKEMON.BULBOSAUR, true);
@@ -135,6 +135,10 @@ public class EndlessController {
 
     public void fight() {
         if (fightButton.isVisible()) {
+
+            if (Player.getTrainerSprite() != trainer.getTrainer())
+                trainer.changeTrainer(Player.getTrainerSprite());
+
             fightButton.setVisible(false);
             runButton.setVisible(false);
             bagButton.setVisible(false);
@@ -250,7 +254,11 @@ public class EndlessController {
     public void enemyWin(TYPE player, TYPE enemy) {
         double damage = (double) 1 / level;
 
-        if (Math.random() <= .1) {
+        double critChance = .1;
+        if (level > 5)
+            critChance *= 3;
+
+        if (Math.random() <= critChance) {
             damage = damage * 2;
             textBoxLabel.setText("Your opponent landed a critical hit and dealt extra damage!");
         } else {
@@ -291,7 +299,7 @@ public class EndlessController {
         if (trainer.getHealth() <= 0) {
             friendlyTrainerLost.play();
 
-            level = 1;
+            level = 2;
             enemyLevel.setText("" + level);
             chargedValue.set(0);
             Player.setHasUsedItem(false);

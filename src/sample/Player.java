@@ -2,12 +2,15 @@ package sample;
 
 import sample.Selectors.ITEM;
 import sample.Selectors.LOCATION;
+import sample.Selectors.TRAINER;
 import sample.Selectors.TYPE;
 
 public abstract class Player {
 
     private static int money = 0;
     private static int level = 5;
+
+    private static TRAINER trainerSprite = TRAINER.FEMALE_TRAINER_THREE;
 
     private static LOCATION location;
     private static ITEM selectedItem;
@@ -48,6 +51,10 @@ public abstract class Player {
 
     public static LOCATION getLocation() {
         return location;
+    }
+
+    public static TRAINER getTrainerSprite() {
+        return trainerSprite;
     }
 
     public static boolean isHasUsedItem() {
@@ -127,6 +134,10 @@ public abstract class Player {
             }
         }
 
+    }
+
+    public static void setTrainerSprite(TRAINER trainerSprite) {
+        Player.trainerSprite = trainerSprite;
     }
 
     public static void setSelectedItem(ITEM selectedItem) {

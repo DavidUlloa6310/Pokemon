@@ -88,6 +88,23 @@ public class Trainer extends ImageView {
         }
     }
 
+    public TRAINER getTrainer() {
+        return trainer;
+    }
+
+    public void changeTrainer(TRAINER trainer) {
+        this.trainer = trainer;
+        this.images = trainer.getFrames();
+        if (!isEnemy) {
+            generateStartTimer();
+            setImage(images.get(0));
+        } else {
+            setImage(trainer.getFrontImage());
+        }
+        generateLoseTimeline();
+        generateSpawnTimeline();
+    }
+
     public void removeHealth(double health) {
         if (health < 0)
             return;

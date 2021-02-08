@@ -86,8 +86,8 @@ public class CampaignController {
     @FXML
     public void initialize() {
 
-        trainer = new Trainer(TRAINER.MALE_TRAINER, false);
-        enemyTrainer = new Trainer(TRAINER.FEMALE_TRAINER, true);
+        trainer = new Trainer(TRAINER.MALE_TRAINER_ONE, false);
+        enemyTrainer = new Trainer(TRAINER.FEMALE_TRAINER_ONE, true);
 
         friendlyPokemon = new Pokemon(POKEMON.BULBOSAUR, false);
         enemyPokemon = new Pokemon(POKEMON.BULBOSAUR, true);
