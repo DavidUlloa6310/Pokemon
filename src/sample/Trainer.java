@@ -39,17 +39,32 @@ public class Trainer extends ImageView {
         this.isEnemy = isEnemy;
 
         this.images = TRAINER.getFrames();
+        placeTrainer();
+
         if (!isEnemy) {
-            relocate(0, 63);
             generateStartTimer();
             setImage(images.get(0));
         } else {
-            relocate(210, 30);
             setImage(TRAINER.getFrontImage());
         }
 
         generateLoseTimeline();
         generateSpawnTimeline();
+    }
+
+    public void placeTrainer() {
+        if (isEnemy) {
+            double width = trainer.getFrontImage().getWidth();
+            double height = trainer.getFrontImage().getHeight();
+
+            setX(210 - (width - 36));
+            setY(30 - (height - 65));
+
+//            setX(210);
+//            setY(30);
+        } else {
+            relocate(0, 63);
+        }
     }
 
     public POKEMON getRandomPokemon() {
@@ -101,6 +116,7 @@ public class Trainer extends ImageView {
         } else {
             setImage(trainer.getFrontImage());
         }
+        placeTrainer();
         generateLoseTimeline();
         generateSpawnTimeline();
     }
