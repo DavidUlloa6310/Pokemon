@@ -57,11 +57,20 @@ public class Trainer extends ImageView {
             double width = trainer.getFrontImage().getWidth();
             double height = trainer.getFrontImage().getHeight();
 
-            setX(210 - (width - 36));
-            setY(30 - (height - 65));
+            double adjustedWidth = width - 36;
+            double adjustedHeight = height - 65;
 
-//            setX(210);
-//            setY(30);
+            if (width < 36) {
+                adjustedWidth = Math.abs(adjustedWidth);
+            }
+
+            if (height < 65) {
+                adjustedHeight = Math.abs(adjustedHeight);
+            }
+
+            setX(210 - adjustedWidth);
+            setY(30 - adjustedHeight);
+
         } else {
             relocate(0, 63);
         }
