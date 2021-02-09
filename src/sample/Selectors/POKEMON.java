@@ -12,7 +12,7 @@ public enum POKEMON {
 
     IVYSAUR("resources/images/pokemon/hurt/ivysaurOne.png", "resources/images/pokemon/hurt/ivysaurTwo.png", "resources/images/pokemon/enemy/ivysaurOne.png", "resources/images/pokemon/enemy/ivysaurTwo.png", "resources/images/pokemon/player/ivysaurOne.png", "resources/images/pokemon/player/ivysaurTwo.png", TYPE.GRASS, VENOSAUR),
     WARTORTLE("resources/images/pokemon/hurt/wartortleOne.png", "resources/images/pokemon/hurt/wartortleTwo.png", "resources/images/pokemon/enemy/wartortleOne.png", "resources/images/pokemon/enemy/wartortleTwo.png", "resources/images/pokemon/player/wartortleOne.png", "resources/images/pokemon/player/wartortleTwo.png", TYPE.WATER, BLASTOISE),
-    CHARMELEON("resources/images/pokemon/hurt/charmeleonOne.png", "resources/images/pokemon/hurt/charmeleonTwo.png", "resources/images/pokemon/enemy/charmeleonOne.png", "resources/images/pokemon/enemy/charmeleonTwo.png", "resources/images/pokemon/player/charmeleonOne.png", "resources/images/pokemon/player/charmeleonOne.png", TYPE.FIRE, CHARIZARD),
+    CHARMELEON("resources/images/pokemon/hurt/charmeleonOne.png", "resources/images/pokemon/hurt/charmeleonTwo.png", "resources/images/pokemon/enemy/charmeleonOne.png", "resources/images/pokemon/enemy/charmeleonTwo.png", "resources/images/pokemon/player/charmeleonOne.png", "resources/images/pokemon/player/charmeleonTwo.png", TYPE.FIRE, CHARIZARD),
 
 
     BULBOSAUR("resources/images/pokemon/hurt/bulbosaurOne.png","resources/images/pokemon/hurt/bulbosaurTwo.png", "resources/images/pokemon/enemy/bulbosaurOne.png", "resources/images/pokemon/enemy/bulbosaurTwo.png", "resources/images/pokemon/player/bulbosaurOne.png", "resources/images/pokemon/player/bulbosaurTwo.png", TYPE.GRASS, IVYSAUR),
