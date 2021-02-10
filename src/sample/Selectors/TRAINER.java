@@ -16,31 +16,34 @@ public enum TRAINER {
     FEMALE_TRAINER_TWO("resources/images/trainers/player/femaleTrainerTwo/femaleTrainerOne.png", "resources/images/trainers/player/femaleTrainerTwo/femaleTrainerTwo.png", "resources/images/trainers/player/femaleTrainerTwo/femaleTrainerThree.png", "resources/images/trainers/player/femaleTrainerTwo/femaleTrainerFour.png", "resources/images/trainers/player/femaleTrainerTwo/femaleTrainerFive.png", "resources/images/trainers/player/femaleTrainerTwo/femaleTrainerSix.png", "resources/images/trainers/player/femaleTrainerTwo/femaleTrainerSeven.png", "resources/images/trainers/player/femaleTrainerTwo/femaleTrainerEight.png", "resources/images/trainers/enemy/femaleTrainerTwo.png"),
     FEMALE_TRAINER_THREE("resources/images/trainers/player/femaleTrainerThree/femaleTrainerOne.png", "resources/images/trainers/player/femaleTrainerThree/femaleTrainerTwo.png", "resources/images/trainers/player/femaleTrainerThree/femaleTrainerThree.png", "resources/images/trainers/player/femaleTrainerThree/femaleTrainerFour.png", "resources/images/trainers/player/femaleTrainerThree/femaleTrainerFive.png", "resources/images/trainers/player/femaleTrainerThree/femaleTrainerSix.png", "resources/images/trainers/player/femaleTrainerThree/femaleTrainerSix.png", "resources/images/trainers/player/femaleTrainerThree/femaleTrainerSix.png", "resources/images/trainers/enemy/femaleTrainerThree.png"),
 
-    ARCHITECT("resources/images/trainers/enemy/architect.png"),
-    BIMBO("resources/images/trainers/enemy/bimbo.png"),
-    BIRD_CATCHER("resources/images/trainers/enemy/birdCatcher.png"),
-    BOY("resources/images/trainers/enemy/boy.png"),
-    BUG_CATCHER("resources/images/trainers/enemy/bugcatcher.png"),
-    CRAZY_LADY("resources/images/trainers/enemy/crazyLady.png"),
-    DANCERS("resources/images/trainers/enemy/dancers.png"),
-    DINOSAUR("resources/images/trainers/enemy/dinosaur.png"),
-    DRAGON_TRAINER_MALE("resources/images/trainers/enemy/dragonTrainerMale.png"),
-    DRAGON_TRAINER_FEMALE("resources/images/trainers/enemy/dragonTrainerFemale.png"),
-    FIRE_MAN("resources/images/trainers/enemy/fireMan.png"),
-    KARATE("resources/images/trainers/enemy/karate.png"),
-    KYOSHI("resources/images/trainers/enemy/kyoshi.png"),
-    MAGICIAN("resources/images/trainers/enemy/magician.png"),
-    MONK("resources/images/trainers/enemy/monk.png"),
-    OLD_MAN("resources/images/trainers/enemy/oldMan.png"),
-    RICH_MAN("resources/images/trainers/enemy/richMan.png"),
-    ROBOT_MAN("resources/images/trainers/enemy/robotMan.png"),
-    ROCKET_FEMALE("resources/images/trainers/enemy/rocketFemale.png"),
-    ROCKET_MALE("resources/images/trainers/enemy/rocketMale.png"),
-    SCHOOL_GIRL("resources/images/trainers/enemy/schoolGirl.png"),
-    SCIENTIST("resources/images/trainers/enemy/scientist.png"),
-    SWIMMER_FEMALE("resources/images/trainers/enemy/swimmerFemale.png"),
-    SWIMMER_MALE("resources/images/trainers/enemy/swimmerMale.png"),
-    TWINS("resources/images/trainers/enemy/twins.png");
+    ARCHITECT("architect"),
+    BIMBO("bimbo"),
+    BIRD_CATCHER("birdCatcher"),
+    BOY("boy"),
+    BUG_CATCHER("bugcatcher"),
+    CRAZY_LADY("crazyLady"),
+    DANCERS("dancers"),
+    DINOSAUR("dinosaur"),
+    DRAGON_TRAINER_MALE("dragonTrainerMale"),
+    DRAGON_TRAINER_FEMALE("dragonTrainerFemale"),
+    FIRE_MAN("fireMan"),
+    KARATE("karate"),
+    KYOSHI("kyoshi"),
+    MAGICIAN("magician"),
+    MONK("monk"),
+    OLD_MAN("oldMan"),
+    RICH_MAN("richMan"),
+    ROBOT_MAN("robotMan"),
+    ROCKET_FEMALE("rocketFemale"),
+    ROCKET_MALE("rocketMale"),
+    SCHOOL_GIRL("schoolGirl"),
+    SCIENTIST("scientist"),
+    SWIMMER_FEMALE("swimmerFemale"),
+    SWIMMER_MALE("swimmerMale"),
+    TWINS("twins"),
+
+    FALKNER("falker"), BUGSY("bugsy"), WHITNEY("whitney"), MORTY("morty"), CHUCK("chuck"),
+    JASMINE("jasmine"), PRYCE("pryce"), CLAIR("clair"), LANCE("lance"), Red("red");
 
     private final Image frontImage;
     private final ArrayList<Image> frames = new ArrayList<Image>();
@@ -91,8 +94,8 @@ public enum TRAINER {
         frames.add(new Image(frameEight));
     }
 
-    TRAINER(String imagePath) {
-        frontImage = new Image(imagePath);
+    TRAINER(String name) {
+        frontImage = new Image("resources/images/trainers/enemy" + name + ".png");
         frames.add(frontImage);
     }
 
