@@ -2,6 +2,7 @@ package sample;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import sample.Selectors.BACKGROUND;
 import sample.Selectors.POKEMON;
 import sample.Selectors.TRAINER;
 
@@ -10,16 +11,16 @@ import java.util.LinkedList;
 public class Battle {
 
     private static Battle[] battles = generateCampaignBattles();
-    private static int currentBattle = 0;
+    private static int currentBattle = -1;
 
-    private Image background;
+    private BACKGROUND background;
     private TRAINER trainer;
 
     private POKEMON firePokemon;
     private POKEMON waterPokemon;
     private POKEMON grassPokemon;
 
-    public Image getBackground() {
+    public BACKGROUND getBackground() {
         return background;
     }
 
@@ -39,7 +40,7 @@ public class Battle {
         return grassPokemon;
     }
 
-    public Battle(Image background, TRAINER trainer, POKEMON firePokemon, POKEMON waterPokemon, POKEMON grassPokemon) {
+    public Battle(BACKGROUND background, TRAINER trainer, POKEMON firePokemon, POKEMON waterPokemon, POKEMON grassPokemon) {
         this.background = background;
         this.trainer = trainer;
         this.firePokemon = firePokemon;
@@ -48,7 +49,7 @@ public class Battle {
     }
 
     private void generateBattle(ImageView background, Trainer trainer) {
-        background.setImage(battles[currentBattle].getBackground());
+        background.setImage(battles[currentBattle].getBackground().getBackgroundImage());
         trainer.changeTrainer(battles[currentBattle].getTrainer());
     }
 
@@ -63,8 +64,8 @@ public class Battle {
 
     public static Battle[] generateCampaignBattles() {
         Battle[] battles = new Battle[13];
-//        battles[0] = new Battle();
-//        battles[1] = new Battle();
+        battles[0] = new Battle(BACKGROUND.GRASS, TRAINER.FEMALE_TRAINER_THREE, POKEMON.CHARIZARD, POKEMON.BLASTOISE, POKEMON.VENOSAUR);
+        battles[1] = new Battle(BACKGROUND.GROUND, TRAINER.MALE_TRAINER_ONE, POKEMON.CHARIZARD, POKEMON.BLASTOISE, POKEMON.VENOSAUR);
 //        battles[2] = new Battle();
 //        battles[3] = new Battle();
 //        battles[4] = new Battle();

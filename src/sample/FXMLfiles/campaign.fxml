@@ -16,7 +16,7 @@
          <children>
             <Pane fx:id="topPane" prefHeight="192.0" prefWidth="256.0" style="-fx-background-color: #000000;">
                <children>
-                  <ImageView fitHeight="157.0" fitWidth="256.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="battleBackground" fitHeight="157.0" fitWidth="256.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../resources/images/backgrounds/battleBackgrounds/greenBackground.png" />
                      </image>

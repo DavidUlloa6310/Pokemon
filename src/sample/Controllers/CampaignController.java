@@ -17,14 +17,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-import sample.Player;
-import sample.Pokemon;
-import sample.SceneLibrary;
+import sample.*;
 import sample.Selectors.ITEM;
 import sample.Selectors.POKEMON;
 import sample.Selectors.TRAINER;
 import sample.Selectors.TYPE;
-import sample.Trainer;
 
 import javax.swing.*;
 
@@ -61,6 +58,9 @@ public class CampaignController {
 
     @FXML
     private Pane topPane;
+
+    @FXML
+    private ImageView battleBackground;
 
     @FXML
     private ProgressBar chargedAttackBar;
@@ -109,13 +109,15 @@ public class CampaignController {
     @FXML
     public void initialize() {
 
+        enemyTrainer = new Trainer(TRAINER.getRandomTrainer(), true);
+
         generateProgressBar();
+        Battle.nextBattle(battleBackground, enemyTrainer);
 
         enemyLevel.setText("" + level);
         playerLevel.setText("" + Player.getLevel());
 
         trainer = new Trainer(Player.getTrainerSprite(), false);
-        enemyTrainer = new Trainer(TRAINER.getRandomTrainer(), true);
 
         friendlyPokemon = new Pokemon(POKEMON.BULBOSAUR, false);
         enemyPokemon = new Pokemon(POKEMON.BULBOSAUR, true);
@@ -282,6 +284,7 @@ public class CampaignController {
             int cash = enemyTrainer.generateCash(level);
             Player.addMoney(cash);
             textBoxLabel.setText("You have defeated the enemy trainer!\nEarned " + cash + " cash");
+
             enemyTrainer.startDespawnTimer();
             resetEnemy.play();
 
@@ -376,10 +379,15 @@ public class CampaignController {
             chargeAttackButton.setVisible(true);
         });
 
+        resetEnemy.setOnFinished(e -> {
+            Battle.nextBattle(battleBackground, enemyTrainer);
+        });
+
         checkDamage.setOnFinished(e -> {
             checkWin(friendlyPokemon.getType(), enemyPokemon.getType());
             checkLost();
         });
+
     }
 
     public void generateProgressBar() {
@@ -435,8 +443,10 @@ public class CampaignController {
         friendlyTrainerLost.setOnFinished(e -> {
             JOptionPane.showMessageDialog(null, "You blacked out");
             SceneLibrary.startMenu();
+
             trainer.reset();
             enemyTrainer.reset();
+
             changePlayerHealth(trainer.getHealth());
             changeEnemyHealth(trainer.getHealth());
             level = 1;

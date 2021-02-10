@@ -190,15 +190,16 @@ public class Trainer extends ImageView {
 
     public void reset() {
 
+        health = 1;
+
+    }
+
+    public void randomizeTrainer() {
         if (isEnemy) {
-            this.trainer = TRAINER.getRandomTrainer();
             this.images = trainer.getFrames();
             generateStartTimer();
             setImage(trainer.getFrontImage());
         }
-
-        health = 1;
-
     }
 
     public void startStartTimer() {

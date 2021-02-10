@@ -405,6 +405,7 @@ public class EndlessController {
 
         enemyTrainerLost.setOnFinished(e -> {
             enemyTrainer.reset();
+            enemyTrainer.randomizeTrainer();
             changeEnemyHealth(enemyTrainer.getHealth());
         });
     }
@@ -435,8 +436,12 @@ public class EndlessController {
         friendlyTrainerLost.setOnFinished(e -> {
             JOptionPane.showMessageDialog(null, "You blacked out");
             SceneLibrary.startMenu();
+
             trainer.reset();
+
             enemyTrainer.reset();
+            enemyTrainer.randomizeTrainer();
+
             changePlayerHealth(trainer.getHealth());
             changeEnemyHealth(trainer.getHealth());
             level = 1;
