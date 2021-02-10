@@ -6,18 +6,20 @@ import java.util.ArrayList;
 
 public enum POKEMON {
 
-    VENOSAUR("resources/images/pokemon/hurt/Starters/venosaurOne.png", "resources/images/pokemon/hurt/Starters/venosaurTwo.png", "resources/images/pokemon/enemy/Starters/venosaurOne.png", "resources/images/pokemon/enemy/Starters/venosaurTwo.png", "resources/images/pokemon/player/Starters/venosaurOne.png", "resources/images/pokemon/player/Starters/venosaurTwo.png", TYPE.GRASS),
-    CHARIZARD("resources/images/pokemon/hurt/Starters/charizardOne.png", "resources/images/pokemon/hurt/Starters/charizardTwo.png", "resources/images/pokemon/enemy/Starters/charizardOne.png", "resources/images/pokemon/enemy/Starters/charizardTwo.png", "resources/images/pokemon/player/Starters/charizardOne.png", "resources/images/pokemon/player/Starters/charizardTwo.png", TYPE.FIRE),
-    BLASTOISE("resources/images/pokemon/hurt/Starters/blastoiseOne.png", "resources/images/pokemon/hurt/Starters/blastoiseTwo.png", "resources/images/pokemon/enemy/Starters/blastoiseOne.png", "resources/images/pokemon/enemy/Starters/blastoiseTwo.png", "resources/images/pokemon/player/Starters/blastoiseOne.png", "resources/images/pokemon/player/Starters/blastoiseTwo.png", TYPE.WATER),
+    VENOSAUR("venosaur", TYPE.GRASS), CHARIZARD("charizard", TYPE.FIRE), BLASTOISE("blastoise", TYPE.WATER),
+    IVYSAUR("ivysaur", TYPE.GRASS, VENOSAUR), WARTORTLE("wartortle", TYPE.WATER, BLASTOISE), CHARMELEON("charmeleon", TYPE.FIRE, CHARIZARD),
+    BULBOSAUR("bulbosaur", TYPE.GRASS, IVYSAUR), CHARMANDER("charmander", TYPE.FIRE, CHARMELEON), SQUIRTLE("squirtle", TYPE.WATER, WARTORTLE),
 
-    IVYSAUR("resources/images/pokemon/hurt/Starters/ivysaurOne.png", "resources/images/pokemon/hurt/Starters/ivysaurTwo.png", "resources/images/pokemon/enemy/Starters/ivysaurOne.png", "resources/images/pokemon/enemy/Starters/ivysaurTwo.png", "resources/images/pokemon/player/Starters/ivysaurOne.png", "resources/images/pokemon/player/Starters/ivysaurTwo.png", TYPE.GRASS, VENOSAUR),
-    WARTORTLE("resources/images/pokemon/hurt/Starters/wartortleOne.png", "resources/images/pokemon/hurt/Starters/wartortleTwo.png", "resources/images/pokemon/enemy/Starters/wartortleOne.png", "resources/images/pokemon/enemy/Starters/wartortleTwo.png", "resources/images/pokemon/player/Starters/wartortleOne.png", "resources/images/pokemon/player/Starters/wartortleTwo.png", TYPE.WATER, BLASTOISE),
-    CHARMELEON("resources/images/pokemon/hurt/Starters/charmeleonOne.png", "resources/images/pokemon/hurt/Starters/charmeleonTwo.png", "resources/images/pokemon/enemy/Starters/charmeleonOne.png", "resources/images/pokemon/enemy/Starters/charmeleonTwo.png", "resources/images/pokemon/player/Starters/charmeleonOne.png", "resources/images/pokemon/player/Starters/charmeleonTwo.png", TYPE.FIRE, CHARIZARD),
-
-
-    BULBOSAUR("resources/images/pokemon/hurt/Starters/bulbosaurOne.png", "resources/images/pokemon/hurt/Starters/bulbosaurTwo.png", "resources/images/pokemon/enemy/Starters/bulbosaurOne.png", "resources/images/pokemon/enemy/Starters/bulbosaurTwo.png", "resources/images/pokemon/player/Starters/bulbosaurOne.png", "resources/images/pokemon/player/Starters/bulbosaurTwo.png", TYPE.GRASS, IVYSAUR),
-    CHARMANDER("resources/images/pokemon/hurt/Starters/charmanderOne.png", "resources/images/pokemon/hurt/Starters/charmanderTwo.png", "resources/images/pokemon/enemy/Starters/charmanderOne.png", "resources/images/pokemon/enemy/Starters/charmanderTwo.png", "resources/images/pokemon/player/Starters/charmanderOne.png", "resources/images/pokemon/player/Starters/charmanderTwo.png", TYPE.FIRE, CHARMELEON),
-    SQUIRTLE("resources/images/pokemon/hurt/Starters/squirtleOne.png", "resources/images/pokemon/hurt/Starters/squirtleTwo.png", "resources/images/pokemon/enemy/Starters/squirtleOne.png", "resources/images/pokemon/enemy/Starters/squirtleTwo.png", "resources/images/pokemon/player/Starters/squirtleOne.png", "resources/images/pokemon/player/Starters/squirtleTwo.png", TYPE.WATER, WARTORTLE);
+    VULPIX("vulpix", TYPE.FIRE), PUMPLUF("pumpluf", TYPE.GRASS), PELIPPER("pelipper", TYPE.WATER),
+    VESPIQUEEN("vespiqueen", TYPE.GRASS), PONYTA("ponyta", TYPE.FIRE), SURSKIT("surskit", TYPE.WATER),
+    BIBAREL("bibarel", TYPE.WATER), FLAREON("flareon", TYPE.FIRE), PARAS("paras", TYPE.GRASS),
+    SHARPEDO("sharpedo", TYPE.WATER), SHRIFTY("shrifty", TYPE.GRASS), HOUNDDOOM("hounddoom", TYPE.FIRE),
+    POLIWRATH("poliwrath", TYPE.WATER), BRELOOM("breloom", TYPE.GRASS), BLAZIKEN("blaziken", TYPE.FIRE),
+    EMPOLEAN("empolean", TYPE.WATER), TORKOAL("torkoal", TYPE.FIRE), CRADILY("cradily", TYPE.GRASS),
+    ABOMASNOW("abomasnow", TYPE.GRASS), WALREIN("walrein", TYPE.WATER), ARCANINE("arcanine", TYPE.FIRE),
+    GYRADOS("gyrados", TYPE.FIRE), TROPIUS("tropius", TYPE.GRASS),
+    SCEPTILE("sceptile", TYPE.GRASS),
+    SHINY_VENOSAUR("shinyVenosaur", TYPE.GRASS), SHINY_CHARIZARD("shinyCharizard", TYPE.FIRE), SHINY_BLASTOISE("shinyBlastoise", TYPE.WATER);
 
 
     private final ArrayList<Image> playerImages = new ArrayList<Image>();
@@ -45,6 +47,14 @@ public enum POKEMON {
     POKEMON(String hurtEnemy, String hurtPlayer, String enemyImageOne, String enemyImageTwo, String playerImageOne, String playerImageTwo, TYPE type, POKEMON evolution) {
         this(hurtEnemy, hurtPlayer, enemyImageOne, enemyImageTwo, playerImageOne, playerImageTwo, type);
         this.evolution = evolution;
+    }
+
+    POKEMON(String name, TYPE type, POKEMON evolution) {
+        this("resources/images/pokemon/hurt/" + name + "One.png", "resources/images/pokemon/hurt/" + name + "Two.png", "resources/images/pokemon/enemy/" + name + "One.png", "resources/images/pokemon/enemy/" + name + "Two.png", "resources/images/pokemon/player/" + name + "One.png", "resources/images/pokemon/player/" + name + "Two.png", type, evolution);
+    }
+
+    POKEMON(String name, TYPE type) {
+        this(name, type, null);
     }
 
     public POKEMON getEvolution() {

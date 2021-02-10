@@ -49,7 +49,8 @@ public class CampaignController {
 
     private final FadeTransition enemyTrainerLost = new FadeTransition();
     private final FadeTransition enemyTrainerRespawn = new FadeTransition();
-    private final SequentialTransition resetEnemy = new SequentialTransition(enemyTrainerLost, enemyTrainerRespawn);
+    private final PauseTransition generateNextBattle = new PauseTransition();
+    private final SequentialTransition resetEnemy = new SequentialTransition(enemyTrainerLost, generateNextBattle, enemyTrainerRespawn);
 
     private final FadeTransition friendlyTrainerLost = new FadeTransition();
 
@@ -379,13 +380,13 @@ public class CampaignController {
             chargeAttackButton.setVisible(true);
         });
 
-        resetEnemy.setOnFinished(e -> {
-            Battle.nextBattle(battleBackground, enemyTrainer);
-        });
-
         checkDamage.setOnFinished(e -> {
             checkWin(friendlyPokemon.getType(), enemyPokemon.getType());
             checkLost();
+        });
+
+        generateNextBattle.setOnFinished(e -> {
+            Battle.nextBattle(battleBackground, enemyTrainer);
         });
 
     }

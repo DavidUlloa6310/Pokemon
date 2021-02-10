@@ -4,13 +4,22 @@ import javafx.scene.image.Image;
 
 public enum BACKGROUND {
 
-    GRASS("resources/images/backgrounds/battleBackgrounds/greenBackground.png"), GHOST("resources/images/backgrounds/battleBackgrounds/ghostBackground.png"), GROUND("resources/images/backgrounds/battleBackgrounds/groundBackground.png"),
-    PSYCHIC("resources/images/backgrounds/battleBackgrounds/purpleBackground.png");
+    GRASS("grass"),
+    GHOST("ghost"),
+    GROUND("ground"),
+    PSYCHIC("psychic"),
+    DARK_GRASS("darkGrass"),
+    DESERT("desert"),
+    MUD("mud"),
+    NORMAL("normal"),
+    SNOW("snow"),
+    UNDERGROUND("underground"),
+    WATER("water");
 
     private final Image backgroundImage;
 
-    BACKGROUND(String imagePath) {
-        backgroundImage = new Image(imagePath);
+    BACKGROUND(String name) {
+        backgroundImage = new Image("resources/images/backgrounds/battleBackgrounds/" + name + "Background.png");
     }
 
     public Image getBackgroundImage() {
