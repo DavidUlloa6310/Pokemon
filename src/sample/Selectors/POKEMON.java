@@ -17,7 +17,7 @@ public enum POKEMON {
     POLIWRATH("poliwrath", TYPE.WATER), BRELOOM("breloom", TYPE.GRASS), BLAZIKEN("blaziken", TYPE.FIRE),
     EMPOLEAN("empolean", TYPE.WATER), TORKOAL("torkoal", TYPE.FIRE), CRADILY("cradily", TYPE.GRASS),
     ABOMASNOW("abomasnow", TYPE.GRASS), WALREIN("walrein", TYPE.WATER), ARCANINE("arcanine", TYPE.FIRE),
-    GYRADOS("gyrados", TYPE.FIRE), TROPIUS("tropius", TYPE.GRASS),
+    GYRADOS("gyrados", TYPE.WATER), TROPIUS("tropius", TYPE.GRASS), DRAGONAIR("dragonair", TYPE.WATER),
     SCEPTILE("sceptile", TYPE.GRASS),
     SHINY_VENOSAUR("shinyVenosaur", TYPE.GRASS), SHINY_CHARIZARD("shinyCharizard", TYPE.FIRE), SHINY_BLASTOISE("shinyBlastoise", TYPE.WATER);
 

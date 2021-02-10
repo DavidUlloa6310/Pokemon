@@ -130,6 +130,18 @@ public class Trainer extends ImageView {
         generateSpawnTimeline();
     }
 
+    public void setFirePokemon(POKEMON firePokemon) {
+        this.firePokemon = firePokemon;
+    }
+
+    public void setWaterPokemon(POKEMON waterPokemon) {
+        this.waterPokemon = waterPokemon;
+    }
+
+    public void setGrassPokemon(POKEMON grassPokemon) {
+        this.grassPokemon = grassPokemon;
+    }
+
     public void removeHealth(double health) {
         if (health < 0)
             return;

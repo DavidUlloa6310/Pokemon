@@ -42,8 +42,8 @@ public enum TRAINER {
     SWIMMER_MALE("swimmerMale"),
     TWINS("twins"),
 
-    FALKNER("falker"), BUGSY("bugsy"), WHITNEY("whitney"), MORTY("morty"), CHUCK("chuck"),
-    JASMINE("jasmine"), PRYCE("pryce"), CLAIR("clair"), LANCE("lance"), Red("red");
+    FALKNER("falkner"), BUGSY("bugsy"), WHITNEY("whitney"), MORTY("morty"), CHUCK("chuck"),
+    JASMINE("jasmine"), PRYCE("pryce"), CLAIR("clair"), LANCE("lance"), RED("red");
 
     private final Image frontImage;
     private final ArrayList<Image> frames = new ArrayList<Image>();
@@ -95,7 +95,7 @@ public enum TRAINER {
     }
 
     TRAINER(String name) {
-        frontImage = new Image("resources/images/trainers/enemy" + name + ".png");
+        frontImage = new Image("resources/images/trainers/enemy/" + name + ".png");
         frames.add(frontImage);
     }
 

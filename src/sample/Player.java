@@ -20,18 +20,18 @@ public abstract class Player {
     private static ITEM selectedItem;
     private static boolean hasUsedItem = false;
 
-    private static boolean hasChoiceBand = false;
-    private static boolean hasAmuletCoin = false;
-    private static boolean hasXPShare = false;
+    private static boolean hasChoiceBand = true;
+    private static boolean hasAmuletCoin = true;
+    private static boolean hasXPShare = true;
 
-    private static boolean hasCharcoal = false;
-    private static boolean hasMysticWater = false;
-    private static boolean hasMiracleSeed = false;
+    private static boolean hasCharcoal = true;
+    private static boolean hasMysticWater = true;
+    private static boolean hasMiracleSeed = true;
 
-    private static int potions = 0;
-    private static int waterPlates = 0;
-    private static int firePlates = 0;
-    private static int grassPlates = 0;
+    private static int potions = 10;
+    private static int waterPlates = 10;
+    private static int firePlates = 10;
+    private static int grassPlates = 10;
 
     public static double calculateDamage(int level, TYPE type) {
         double damage = (double) 1 / level;
