@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.5" orientation="VERTICAL" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.CampaignController">
+<SplitPane dividerPositions="0.5" orientation="VERTICAL" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.CampaignController">
   <items>
     <AnchorPane>
          <children>
@@ -22,7 +26,7 @@
                         <Image url="@../../resources/images/textBoxes/textBoxOne.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="textBoxLabel" alignment="TOP_LEFT" layoutX="8.0" layoutY="148.0" prefHeight="40.0" prefWidth="243.0" text="Critical Hit!" wrapText="true">
+                  <Label fx:id="textBoxLabel" alignment="TOP_LEFT" layoutX="8.0" layoutY="148.0" prefHeight="40.0" prefWidth="243.0" wrapText="true">
                      <opaqueInsets>
                         <Insets bottom="5.0" top="5.0" />
                      </opaqueInsets>
@@ -67,7 +71,7 @@
                         <Image url="@../../resources/images/buttons/battleButton.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="runButton" fitHeight="48.0" fitWidth="81.0" layoutX="88.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="runButton" fitHeight="48.0" fitWidth="81.0" layoutX="88.0" layoutY="158.0" onMouseClicked="#goToMenu" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../resources/images/buttons/runButton.png" />
                      </image>
@@ -85,6 +89,22 @@
                   <ImageView fx:id="waterButton" fitHeight="58.0" fitWidth="95.0" layoutX="81.0" layoutY="96.0" onMouseClicked="#waterClick" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@../../resources/images/buttons/waterButton.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="bagButton" fitHeight="36.0" fitWidth="69.0" layoutX="14.0" layoutY="160.0" onMouseClicked="#goToBag" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/images/buttons/bagButton.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="shopButton" fitHeight="36.0" fitWidth="60.0" layoutX="187.0" layoutY="160.0" onMouseClicked="#goToShop" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/images/buttons/storeButton.png" />
+                     </image>
+                  </ImageView>
+                  <ProgressBar fx:id="chargedAttackBar" layoutX="7.0" layoutY="14.0" prefHeight="18.0" prefWidth="193.0" progress="0.0" />
+                  <ImageView fx:id="chargeAttackButton" fitHeight="18.0" fitWidth="113.0" layoutX="207.0" layoutY="13.0" onMouseClicked="#chargeAttack" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/images/buttons/chargeAttackButton.png" />
                      </image>
                   </ImageView>
                </children>

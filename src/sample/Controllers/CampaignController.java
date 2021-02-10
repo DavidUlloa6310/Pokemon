@@ -4,17 +4,23 @@ import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-import sample.Point;
+import sample.Player;
 import sample.Pokemon;
 import sample.SceneLibrary;
+import sample.Selectors.ITEM;
 import sample.Selectors.POKEMON;
 import sample.Selectors.TRAINER;
 import sample.Selectors.TYPE;
@@ -26,8 +32,8 @@ public class CampaignController {
 
     private final Group layout = new Group();
 
-    private final Point playerTrainerPos = new Point(0, 63);
-    private final Point playerTrainerPokemon =  new Point(55, 63);
+    private int level = 2;
+    private boolean usedSpecial = false;
 
     private Pokemon friendlyPokemon;
     private Pokemon enemyPokemon;
@@ -53,17 +59,28 @@ public class CampaignController {
     private Rectangle playerHealth;
     private Rectangle enemyHealth;
 
-    private final Point enemyTrainerPos = new Point(210, 30);
-    private final Point enemyTrainerPokemon = new Point(140, 20);
-
     @FXML
     private Pane topPane;
+
+    @FXML
+    private ProgressBar chargedAttackBar;
+    private final DoubleProperty chargedValue = new SimpleDoubleProperty();
+    private boolean hasChargedAttack = false;
 
     @FXML
     private ImageView fightButton;
 
     @FXML
+    private ImageView chargeAttackButton;
+
+    @FXML
     private ImageView runButton;
+
+    @FXML
+    private ImageView shopButton;
+
+    @FXML
+    private ImageView bagButton;
 
     @FXML
     private ImageView fireButton;
@@ -84,10 +101,21 @@ public class CampaignController {
     private ImageView enemyHealthBar;
 
     @FXML
+    private Label enemyLevel;
+
+    @FXML
+    private Label playerLevel;
+
+    @FXML
     public void initialize() {
 
-        trainer = new Trainer(TRAINER.MALE_TRAINER_ONE, false);
-        enemyTrainer = new Trainer(TRAINER.FEMALE_TRAINER_ONE, true);
+        generateProgressBar();
+
+        enemyLevel.setText("" + level);
+        playerLevel.setText("" + Player.getLevel());
+
+        trainer = new Trainer(Player.getTrainerSprite(), false);
+        enemyTrainer = new Trainer(TRAINER.getRandomTrainer(), true);
 
         friendlyPokemon = new Pokemon(POKEMON.BULBOSAUR, false);
         enemyPokemon = new Pokemon(POKEMON.BULBOSAUR, true);
@@ -98,27 +126,7 @@ public class CampaignController {
         changePlayerHealth(trainer.getHealth());
         changeEnemyHealth(enemyTrainer.getHealth());
 
-        //ANIMATIONS
-
-        showPokemon.setOnFinished(e -> {
-            friendlyPokemon.setVisible(true);
-            enemyPokemon.setVisible(true);
-        });
-
-        despawnPokemon.getChildren().addAll(friendlyPokemon.getDespawnTransition(), enemyPokemon.getDespawnTransition());
-        spawnPokemon.getChildren().addAll(friendlyPokemon.getSpawnTransition(), enemyPokemon.getSpawnTransition());
-        attack.getChildren().addAll(friendlyPokemon.getAttackAnimation(), enemyPokemon.getAttackAnimation());
-
-        battle.getChildren().addAll(trainer.getStartTimer(), showPokemon, spawnPokemon, attack, checkDamage, despawnPokemon);
-
-        battle.setOnFinished(e -> {
-            fightButton.setVisible(true);
-            runButton.setVisible(true);
-        });
-
-        checkDamage.setOnFinished(e -> {
-            checkWin(friendlyPokemon.getType(), enemyPokemon.getType());
-        });
+        generateAnimations();
 
         generateEnemyTrainerLost();
         generateEnemyTrainerRespawn();
@@ -127,11 +135,29 @@ public class CampaignController {
 
     public void fight() {
         if (fightButton.isVisible()) {
+
+            if (Player.getTrainerSprite() != trainer.getTrainer())
+                trainer.changeTrainer(Player.getTrainerSprite());
+
             fightButton.setVisible(false);
             runButton.setVisible(false);
+            bagButton.setVisible(false);
+            shopButton.setVisible(false);
+
             fireButton.setVisible(true);
             waterButton.setVisible(true);
             grassButton.setVisible(true);
+        }
+    }
+
+    public void chargeAttack() {
+        if (chargedValue.get() >= 1) {
+            hasChargedAttack = true;
+            chargedAttackBar.setVisible(false);
+            chargeAttackButton.setVisible(false);
+            chargedValue.set(0);
+
+            fight();
         }
     }
 
@@ -140,10 +166,14 @@ public class CampaignController {
             fireButton.setVisible(false);
             waterButton.setVisible(false);
             grassButton.setVisible(false);
+            chargedAttackBar.setVisible(false);
+            chargeAttackButton.setVisible(false);
 
-            friendlyPokemon.setPokemon(trainer.getFirePokemon());
+            friendlyPokemon.setPokemon(Player.getFireSprite());
             enemyPokemon.setPokemon(enemyTrainer.getRandomPokemon());
 
+            checkPotion();
+            textBoxLabel.setText("");
             battle.play();
         }
     }
@@ -153,10 +183,14 @@ public class CampaignController {
             fireButton.setVisible(false);
             waterButton.setVisible(false);
             grassButton.setVisible(false);
+            chargedAttackBar.setVisible(false);
+            chargeAttackButton.setVisible(false);
 
-            friendlyPokemon.setPokemon(trainer.getWaterPokemon());
+            friendlyPokemon.setPokemon(Player.getWaterSprite());
             enemyPokemon.setPokemon(enemyTrainer.getRandomPokemon());
 
+            checkPotion();
+            textBoxLabel.setText("");
             battle.play();
         }
     }
@@ -166,31 +200,111 @@ public class CampaignController {
             fireButton.setVisible(false);
             waterButton.setVisible(false);
             grassButton.setVisible(false);
+            chargedAttackBar.setVisible(false);
+            chargeAttackButton.setVisible(false);
 
-            friendlyPokemon.setPokemon(trainer.getGrassPokemon());
+            friendlyPokemon.setPokemon(Player.getGrassSprite());
             enemyPokemon.setPokemon(enemyTrainer.getRandomPokemon());
 
+            checkPotion();
+            textBoxLabel.setText("");
             battle.play();
         }
     }
 
     public void checkWin(TYPE player, TYPE enemy) {
+
         if ((player == TYPE.FIRE && enemy == TYPE.GRASS) || (player == TYPE.WATER && enemy == TYPE.FIRE) || (player == TYPE.GRASS && enemy == TYPE.WATER)) {
-            enemyTrainer.removeHealth(1);
-            enemyPokemon.startHurtAnimation();
-            changeEnemyHealth(enemyTrainer.getHealth());
-            if (enemyTrainer.getHealth() <= 0) {
-                enemyTrainer.startDespawnTimer();
-                resetEnemy.play();
-            }
+
+           playerWin(player, enemy);
+
         } else if ((player == TYPE.FIRE && enemy == TYPE.WATER) || (player == TYPE.GRASS && enemy == TYPE.FIRE) || (player == TYPE.WATER && enemy == TYPE.GRASS)) {
-            trainer.removeHealth(1);
-            friendlyPokemon.startHurtAnimation();
-            changePlayerHealth(trainer.getHealth());
-            if (trainer.getHealth() <= 0) {
-                friendlyTrainerLost.play();
-            }
+
+            enemyWin(player, enemy);
+
+        } else {
+            textBoxLabel.setText("Draw! Both you and your opponent played " + player + ".");
         }
+    }
+
+    public void playerWin(TYPE player, TYPE enemy) {
+        double damage =  Player.calculateDamage(level, player);
+
+        double critChance = .1;
+        if (Player.isHasChoiceBand())
+            critChance *= 2;
+
+        if (Math.random() <= critChance) {
+            damage = damage * 2;
+            textBoxLabel.setText("You landed a critical hit and dealt extra damage!");
+        } else {
+            textBoxLabel.setText("You played " + player + ", while your opponent played " + enemy + ". You dealt damage.");
+        }
+
+        if (hasChargedAttack) {
+            damage *= 3;
+            hasChargedAttack = false;
+        }
+
+        enemyTrainer.removeHealth(damage);
+        enemyPokemon.startHurtAnimation();
+        changeEnemyHealth(enemyTrainer.getHealth());
+    }
+
+    public void enemyWin(TYPE player, TYPE enemy) {
+        double damage = (double) 1 / level;
+
+        double critChance = .1;
+        if (level > 5)
+            critChance *= 3;
+
+        if (Math.random() <= critChance) {
+            damage = damage * 2;
+            textBoxLabel.setText("Your opponent landed a critical hit and dealt extra damage!");
+        } else {
+            textBoxLabel.setText("You played " + player + ", while your opponent played " + enemy + ". You took damage.");
+        }
+
+        trainer.removeHealth(damage);
+
+        if (Player.isHasChoiceBand())
+            chargedValue.set(chargedValue.get() + .5);
+        else
+            chargedValue.set(chargedValue.get() + .2);
+
+        hasChargedAttack = false;
+        friendlyPokemon.startHurtAnimation();
+        changePlayerHealth(trainer.getHealth());
+    }
+
+    private void checkLost() {
+        if (enemyTrainer.getHealth() <= 0) {
+            int cash = enemyTrainer.generateCash(level);
+            Player.addMoney(cash);
+            textBoxLabel.setText("You have defeated the enemy trainer!\nEarned " + cash + " cash");
+            enemyTrainer.startDespawnTimer();
+            resetEnemy.play();
+
+            level++;
+            Player.increaseLevel();
+
+            enemyLevel.setText("" + level);
+            playerLevel.setText("" + Player.getLevel());
+
+            Player.setHasUsedItem(false);
+
+            return;
+        }
+
+        if (trainer.getHealth() <= 0) {
+            friendlyTrainerLost.play();
+
+            level = 2;
+            enemyLevel.setText("" + level);
+            chargedValue.set(0);
+            Player.setHasUsedItem(false);
+        }
+
     }
 
     public void changePlayerHealth(double amountPercent) {
@@ -241,9 +355,48 @@ public class CampaignController {
         topPane.getChildren().add(enemyHealth);
     }
 
+    public void generateAnimations() {
+        showPokemon.setOnFinished(e -> {
+            friendlyPokemon.setVisible(true);
+            enemyPokemon.setVisible(true);
+        });
+
+        despawnPokemon.getChildren().addAll(friendlyPokemon.getDespawnTransition(), enemyPokemon.getDespawnTransition());
+        spawnPokemon.getChildren().addAll(friendlyPokemon.getSpawnTransition(), enemyPokemon.getSpawnTransition());
+        attack.getChildren().addAll(friendlyPokemon.getAttackAnimation(), enemyPokemon.getAttackAnimation());
+
+        battle.getChildren().addAll(trainer.getStartTimer(), showPokemon, spawnPokemon, attack, checkDamage, despawnPokemon);
+
+        battle.setOnFinished(e -> {
+            fightButton.setVisible(true);
+            runButton.setVisible(true);
+            bagButton.setVisible(true);
+            shopButton.setVisible(true);
+            chargedAttackBar.setVisible(true);
+            chargeAttackButton.setVisible(true);
+        });
+
+        checkDamage.setOnFinished(e -> {
+            checkWin(friendlyPokemon.getType(), enemyPokemon.getType());
+            checkLost();
+        });
+    }
+
+    public void generateProgressBar() {
+        chargedAttackBar.setStyle("-fx-accent: orange;");
+        chargedValue.setValue(0);
+        chargedValue.addListener(new ChangeListener<Object>() {
+
+            @Override
+            public void changed(ObservableValue<?> observable, Object oldValue, Object newValue) {
+                chargedAttackBar.progressProperty().bind(chargedValue);
+            }
+        });
+    }
+
     public void generateEnemyTrainerLost() {
         enemyTrainerLost.setNode(topPane);
-        enemyTrainerLost.setDuration(new Duration(750));
+        enemyTrainerLost.setDuration(new Duration(500));
         enemyTrainerLost.setFromValue(1);
         enemyTrainerLost.setToValue(0);
         enemyTrainerLost.setCycleCount(1);
@@ -274,7 +427,7 @@ public class CampaignController {
         friendlyTrainerLost.setNode(topPane);
         friendlyTrainerLost.setDuration(new Duration(750));
         friendlyTrainerLost.setFromValue(1);
-        friendlyTrainerLost.setToValue(0);
+        friendlyTrainerLost.setToValue(1);
         friendlyTrainerLost.setCycleCount(1);
         friendlyTrainerLost.setAutoReverse(false);
         friendlyTrainerLost.setDelay(Duration.millis(1000));
@@ -282,7 +435,36 @@ public class CampaignController {
         friendlyTrainerLost.setOnFinished(e -> {
             JOptionPane.showMessageDialog(null, "You blacked out");
             SceneLibrary.startMenu();
+            trainer.reset();
+            enemyTrainer.reset();
+            changePlayerHealth(trainer.getHealth());
+            changeEnemyHealth(trainer.getHealth());
+            level = 1;
+            textBoxLabel.setText("");
         });
+    }
+
+    public void checkPotion() {
+        if (Player.getSelectedItem() == ITEM.POTION) {
+            trainer.restoreHealth();
+            changePlayerHealth(trainer.getHealth());
+            Player.setSelectedItem(null);
+        }
+    }
+
+    public void goToMenu() {
+        SceneLibrary.startMenu();
+    }
+
+    public void goToShop() {
+        SceneLibrary.startStore();
+    }
+
+    public void goToBag() {
+        if (!Player.isHasUsedItem())
+            SceneLibrary.startBag();
+        else
+            JOptionPane.showMessageDialog(null, "You have already activated an item for this round.");
     }
 
 }

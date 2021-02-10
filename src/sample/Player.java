@@ -7,7 +7,8 @@ import javax.swing.*;
 public abstract class Player {
 
     private static int money = 0;
-    private static int level = 15;
+    private static int level = 5;
+    private static int completedBadges;
 
     private static TRAINER trainerSprite = TRAINER.FEMALE_TRAINER_THREE;
 
@@ -50,6 +51,10 @@ public abstract class Player {
 
     public static int getLevel() {
         return level;
+    }
+
+    public static int getCompletedBadges() {
+        return completedBadges;
     }
 
     public static LOCATION getLocation() {
@@ -149,6 +154,13 @@ public abstract class Player {
             }
         }
 
+    }
+
+    public static void setCompletedBadges(int completedBadges) {
+        if (completedBadges > 12) {
+            return;
+        }
+        Player.completedBadges = completedBadges;
     }
 
     public static void evolvePokemon() {
