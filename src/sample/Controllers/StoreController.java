@@ -121,7 +121,7 @@ public class StoreController {
         if (Player.getMoney() >= 500 && !Player.isHasXPShare()) {
             Player.setHasXPShare(true);
             Player.removeMoney(500);
-            choiceBandButton.setOpacity(.5);
+            xpShareButton.setOpacity(.5);
             moneyLabel.setText("Your money " + Player.getMoney());
         }
     }
@@ -130,7 +130,7 @@ public class StoreController {
         if (Player.getMoney() >= 1000 && !Player.isHasAmuletCoin()) {
             Player.setHasAmuletCoin(true);
             Player.removeMoney(1000);
-            choiceBandButton.setOpacity(.5);
+            amuletCoinButton.setOpacity(.5);
             moneyLabel.setText("Your money " + Player.getMoney());
         }
     }
@@ -139,16 +139,16 @@ public class StoreController {
         if (Player.getMoney() >= 200 && !Player.isHasCharcoal()) {
             Player.setHasCharcoal(true);
             Player.removeMoney(200);
-            choiceBandButton.setOpacity(.5);
+            charcoalButton.setOpacity(.5);
             moneyLabel.setText("Your money " + Player.getMoney());
         }
     }
 
-    public void buyMistcWater() {
+    public void buyMysticWater() {
         if (Player.getMoney() >= 200 && !Player.isHasMysticWater()) {
             Player.setHasMysticWater(true);
             Player.removeMoney(200);
-            choiceBandButton.setOpacity(.5);
+            mysticWaterButton.setOpacity(.5);
             moneyLabel.setText("Your money " + Player.getMoney());
         }
     }
@@ -157,7 +157,7 @@ public class StoreController {
         if (Player.getMoney() >= 200 && !Player.isHasMiracleSeed()) {
             Player.setHasMiracleSeed(true);
             Player.removeMoney(200);
-            choiceBandButton.setOpacity(.5);
+            miracleSeedButton.setOpacity(.5);
             moneyLabel.setText("Your money " + Player.getMoney());
         }
     }

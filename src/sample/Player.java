@@ -6,7 +6,7 @@ import javax.swing.*;
 
 public abstract class Player {
 
-    private static int money = 0;
+    private static int money = 1000;
     private static int level = 5;
     private static int completedBadges;
 
@@ -20,13 +20,13 @@ public abstract class Player {
     private static ITEM selectedItem;
     private static boolean hasUsedItem = false;
 
-    private static boolean hasChoiceBand = true;
-    private static boolean hasAmuletCoin = true;
-    private static boolean hasXPShare = true;
+    private static boolean hasChoiceBand = false;
+    private static boolean hasAmuletCoin = false;
+    private static boolean hasXPShare = false;
 
-    private static boolean hasCharcoal = true;
-    private static boolean hasMysticWater = true;
-    private static boolean hasMiracleSeed = true;
+    private static boolean hasCharcoal = false;
+    private static boolean hasMysticWater = false;
+    private static boolean hasMiracleSeed = false;
 
     private static int potions = 10;
     private static int waterPlates = 10;
