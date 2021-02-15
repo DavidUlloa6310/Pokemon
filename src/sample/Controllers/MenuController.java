@@ -12,4 +12,8 @@ public class MenuController {
     public void playCampaign() {
         SceneLibrary.startCampaign();
     }
+
+    public void playTutorial() {
+        SceneLibrary.startTutorial();
+    }
 }

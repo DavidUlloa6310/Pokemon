@@ -8,6 +8,7 @@ import sample.Selectors.LOCATION;
 public abstract class SceneLibrary {
     private static Stage primaryStage;
 
+    private static Scene tutorialScene;
     private static Scene menuScene;
     private static Scene endlessScene;
     private static Scene campaignScene;
@@ -38,6 +39,15 @@ public abstract class SceneLibrary {
 
     public static void setBagScene(Parent root) {
         bagScene = new Scene(root, 250, 384);
+    }
+
+    public static void setTutorialScene(Parent root) {
+        tutorialScene = new Scene(root, 250, 384);
+    }
+
+    public static void startTutorial() {
+        Player.setLocation(LOCATION.TUTORIAL);
+        primaryStage.setScene(tutorialScene);
     }
 
     public static void startEndless() {

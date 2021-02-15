@@ -6,9 +6,10 @@ import javax.swing.*;
 
 public abstract class Player {
 
-    private static int money = 1000;
+    private static int money = 0;
     private static int level = 5;
     private static int completedBadges;
+    private static boolean finishedTutorial = false;
 
     private static TRAINER trainerSprite = TRAINER.FEMALE_TRAINER_THREE;
 
@@ -28,10 +29,10 @@ public abstract class Player {
     private static boolean hasMysticWater = false;
     private static boolean hasMiracleSeed = false;
 
-    private static int potions = 10;
-    private static int waterPlates = 10;
-    private static int firePlates = 10;
-    private static int grassPlates = 10;
+    private static int potions = 0;
+    private static int waterPlates = 0;
+    private static int firePlates = 0;
+    private static int grassPlates = 0;
 
     public static double calculateDamage(int level, TYPE type) {
         double damage = (double) 1 / level;
@@ -43,6 +44,10 @@ public abstract class Player {
             damage *= 2;
 
         return damage;
+    }
+
+    public static boolean isFinishedTutorial() {
+        return finishedTutorial;
     }
 
     public static int getMoney() {
@@ -154,6 +159,10 @@ public abstract class Player {
             }
         }
 
+    }
+
+    public static void setFinishedTutorial(boolean finishedTutorial) {
+        Player.finishedTutorial = finishedTutorial;
     }
 
     public static void setCompletedBadges(int completedBadges) {

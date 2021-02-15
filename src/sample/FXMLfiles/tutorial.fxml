@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<SplitPane dividerPositions="0.5" orientation="VERTICAL" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.tutorialController">
+  <items>
+    <AnchorPane>
+         <children>
+            <Pane prefHeight="192.0" prefWidth="256.0">
+               <children>
+                  <ImageView fitHeight="192.0" fitWidth="277.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/images/backgrounds/bagBackground.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="258.0" layoutX="-1.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/images/textBoxes/textBoxOne.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="textBox" alignment="TOP_LEFT" contentDisplay="CENTER" layoutX="7.0" layoutY="150.0" prefHeight="35.0" prefWidth="231.0">
+                     <font>
+                        <Font name="Cambria" size="10.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="143.0" fitWidth="71.0" layoutX="87.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/images/trainers/enemy/professorOak.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+         </children></AnchorPane>
+    <AnchorPane>
+         <children>
+            <Pane prefHeight="192.0" prefWidth="256.0">
+               <children>
+                  <ImageView fx:id="maleTrainerOne" fitHeight="77.0" fitWidth="47.0" layoutX="28.0" layoutY="8.0" onMouseClicked="#selectMaleTrainerOne" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/images/trainers/enemy/maleTrainer.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="femaleTrainerOne" fitHeight="87.0" fitWidth="43.0" layoutX="28.0" layoutY="100.0" onMouseClicked="#selectFemaleTrainerOne" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/images/trainers/enemy/femaleTrainer.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="femaleTrainerTwo" fitHeight="80.0" fitWidth="50.0" layoutX="107.0" layoutY="96.0" onMouseClicked="#selectFemaleTrainerTwo" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/images/trainers/enemy/femaleTrainerTwo.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="femaleTrainerThree" fitHeight="80.0" fitWidth="43.0" layoutX="189.0" layoutY="94.0" onMouseClicked="#selectFemaleTrainerThree" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/images/trainers/enemy/femaleTrainerThree.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="maleTrainerTwo" fitHeight="80.0" fitWidth="43.0" layoutX="107.0" layoutY="11.0" onMouseClicked="#selectMaleTrainerTwo" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/images/trainers/enemy/maleTrainerTwo.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="maleTrainerThree" fitHeight="95.0" fitWidth="43.0" layoutX="184.0" layoutY="10.0" onMouseClicked="#selectMaleTrainerThree" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/images/trainers/enemy/maleTrainerThree.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="fightButton" fitHeight="150.0" fitWidth="200.0" layoutX="29.0" layoutY="43.0" onMouseClicked="#hideFightButton" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@../../resources/images/buttons/battleButton.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="fireButton" fitHeight="56.0" fitWidth="91.0" layoutX="25.0" layoutY="47.0" onMouseClicked="#hideTypeButtons" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@../../resources/images/buttons/fireButton.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="waterButton" fitHeight="68.0" fitWidth="91.0" layoutX="139.0" layoutY="47.0" onMouseClicked="#hideTypeButtons" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@../../resources/images/buttons/waterButton.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="grassButton" fitHeight="40.0" fitWidth="125.0" layoutX="85.0" layoutY="100.0" onMouseClicked="#hideTypeButtons" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@../../resources/images/buttons/grassButton.png" />
+                     </image>
+                  </ImageView>
+                  <ProgressBar fx:id="progressBar" layoutX="16.0" layoutY="11.0" prefHeight="21.0" prefWidth="159.0" progress="0.0" visible="false" />
+                  <ImageView fx:id="chargeAttackButton" fitHeight="20.0" fitWidth="43.0" layoutX="177.0" layoutY="12.0" onMouseClicked="#hideProgressBar" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@../../resources/images/buttons/chargeAttackButton.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="bagButton" fitHeight="48.0" fitWidth="71.0" layoutY="155.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@../../resources/images/buttons/bagButton.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="runButton" fitHeight="40.0" fitWidth="83.0" layoutX="89.0" layoutY="156.0" onMouseClicked="#finishTutorial" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@../../resources/images/buttons/runButton.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="shopButton" fitHeight="48.0" fitWidth="71.0" layoutX="188.0" layoutY="157.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@../../resources/images/buttons/storeButton.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+         </children></AnchorPane>
+  </items>
+</SplitPane>

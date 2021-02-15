@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
@@ -14,6 +15,7 @@ public class Main extends Application {
         Parent campaignRoot = FXMLLoader.load(getClass().getResource("FXMLfiles/campaign.fxml"));
         Parent storeRoot = FXMLLoader.load(getClass().getResource("FXMLfiles/store.fxml"));
         Parent bagRoot = FXMLLoader.load(getClass().getResource("FXMLfiles/bag.fxml"));
+        Parent tutorialRoot = FXMLLoader.load(getClass().getResource("FXMLfiles/tutorial.fxml"));
 
         SceneLibrary.setPrimaryStage(primaryStage);
         SceneLibrary.setMenuRoot(menuRoot);
@@ -21,8 +23,9 @@ public class Main extends Application {
         SceneLibrary.setEndlessRoot(endlessRoot);
         SceneLibrary.setStoreScene(storeRoot);
         SceneLibrary.setBagScene(bagRoot);
+        SceneLibrary.setTutorialScene(tutorialRoot);
 
-        SceneLibrary.startMenu();
+        SceneLibrary.startTutorial();
         primaryStage.show();
     }
 
