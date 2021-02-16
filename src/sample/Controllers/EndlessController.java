@@ -52,7 +52,8 @@ public class EndlessController {
 
     private final FadeTransition enemyTrainerLost = new FadeTransition();
     private final FadeTransition enemyTrainerRespawn = new FadeTransition();
-    private final SequentialTransition resetEnemy = new SequentialTransition(enemyTrainerLost, enemyTrainerRespawn);
+    private final PauseTransition changeEnemySprite = new PauseTransition();
+    private final SequentialTransition resetEnemy = new SequentialTransition(enemyTrainerLost, changeEnemySprite, enemyTrainerRespawn);
 
     private final FadeTransition friendlyTrainerLost = new FadeTransition();
 
@@ -356,6 +357,11 @@ public class EndlessController {
     }
 
     public void generateAnimations() {
+
+        changeEnemySprite.setOnFinished(e -> {
+            enemyTrainer.changeTrainer(TRAINER.getRandomTrainer());
+        });
+
         showPokemon.setOnFinished(e -> {
             friendlyPokemon.setVisible(true);
             enemyPokemon.setVisible(true);
