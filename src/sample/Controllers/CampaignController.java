@@ -303,7 +303,6 @@ public class CampaignController {
         if (trainer.getHealth() <= 0) {
             friendlyTrainerLost.play();
 
-            level = 2;
             enemyLevel.setText("" + level);
             chargedValue.set(0);
             Player.setHasUsedItem(false);
@@ -450,7 +449,6 @@ public class CampaignController {
 
             changePlayerHealth(trainer.getHealth());
             changeEnemyHealth(trainer.getHealth());
-            level = 1;
             textBoxLabel.setText("");
         });
     }
