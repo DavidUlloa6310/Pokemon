@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class Pokemon extends ImageView {
+    //Pokemon Class, which has animations and type
 
     TYPE type;
     boolean isEnemy;

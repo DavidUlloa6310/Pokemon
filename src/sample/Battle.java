@@ -11,6 +11,8 @@ import java.util.LinkedList;
 
 public class Battle {
 
+    //Class for a possible battle, which consists of a background, trainer, and pokemon sprites.
+
     private static Battle[] battles = generateCampaignBattles();
     private static int currentBattle = -1;
 

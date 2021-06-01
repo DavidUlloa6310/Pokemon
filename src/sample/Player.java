@@ -6,6 +6,8 @@ import javax.swing.*;
 
 public abstract class Player {
 
+    //Holds all data of the player, which is consistent among the different modes.
+
     private static int money = 0;
     private static int level = 5;
     private static int completedBadges;

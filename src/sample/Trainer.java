@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.Random;
 
 public class Trainer extends ImageView {
+    //Class for both enemy and player trainers
 
     private int money = 0;
     private double health = 1;

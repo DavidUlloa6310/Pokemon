@@ -5,6 +5,7 @@ public class Point {
     private final int y;
 
     public Point(int x, int y) {
+        //Holds an X, Y value
         this.x = x;
         this.y = y;
     }

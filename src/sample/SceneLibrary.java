@@ -6,6 +6,9 @@ import javafx.stage.Stage;
 import sample.Selectors.LOCATION;
 
 public abstract class SceneLibrary {
+
+    //ALLOWS FOR THE SWAPPING BETWEEN SCENES
+
     private static Stage primaryStage;
 
     private static Scene tutorialScene;
